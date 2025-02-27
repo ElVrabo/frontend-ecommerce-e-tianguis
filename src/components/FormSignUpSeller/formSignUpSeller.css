@@ -19,9 +19,10 @@ h1 {
 .form-signUp {
     background-color: #ffffff;
     padding: 30px;
-    border-radius: 12px;
+    border-radius: 10px;
     border: 2px solid white;
     width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     max-width: 900px;
 }
 
@@ -63,12 +64,11 @@ h1 {
     justify-content: center;
 }
 .field.border{
-    border: none;
-    border-bottom: 2px solid white;
-    color: black;
+    border-radius: 5px;
     background-color: #f4f2ee;
     height: 50px;
-    outline: none;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
 
 }
 .field.border::placeholder{
@@ -76,8 +76,11 @@ h1 {
     text-indent:10px ;
 }
 .field.border:focus{
-    border-bottom: 2px solid white;
+    outline: none;
     
+}
+.alerts-container{
+    margin-top: 20px;
 }
 
 /* Responsivo */

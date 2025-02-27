@@ -1,0 +1,75 @@
+/* Contenedor principal */
+.form-signUp-buyer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f2ee; /* Fondo suave */
+  }
+  
+  /* Tarjeta del formulario */
+  .form-signUp-buyer-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+    max-width: 600px; /* Más ancho para acomodar la cuadrícula */
+  }
+  
+  /* Título del formulario */
+  .form-title {
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Contenedor de la cuadrícula */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 1rem; /* Espacio entre los campos */
+  }
+  
+  /* Grupos de campos */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* Etiquetas */
+  .form-label {
+    font-size: 0.9rem;
+    color: black;
+  }
+  
+  /* Campos de entrada */
+  .form-input {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f4f2ee;
+    font-size: 0.9rem;
+    color: black;
+    /* transition: border-color 0.3s ease; */
+  }
+  
+  .form-input:focus {
+    outline: none;
+    /* Azul al enfocar */
+  }
+  
+  /* Botón de registro */
+  .form-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .alerts-signUpBuyer{
+    margin-top: 20px;
+  }
+ 

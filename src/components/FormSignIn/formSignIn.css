@@ -27,7 +27,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 40%;
     /* max-width: 400px; */
   }
@@ -37,11 +37,52 @@
     margin-bottom: 30px;
     font-family: Garamond;
   }
+  .fields-signIn-container{
+    width: 90%;
+  }
+  .email-signIn{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .field-email-signIn{
+    background-color: #f4f2ee;
+    border-radius: 5px;
+    height: 50px;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+  }
+  .field-email-signIn:focus{
+    outline: none;
+  }
+  .password-signIn{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .field-password-signIn{
+    background-color: #f4f2ee;
+    border-radius: 5px;
+    height: 50px;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+  }
+  .field-password-signIn{
+    outline: none;
+  }
+  .alerts-container-signIn{
+    margin-top: 20px;
+    width: 95%;
+  }
+  .btn-send-formSignIn{
+    margin-top: 35px;
+  }
   .signin-google{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 25px;
+    margin-top: 5px;
   }
   .signin-google h2{
     color:black;

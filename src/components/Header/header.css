@@ -18,8 +18,15 @@
     background-color:  #f4f2ee;
     border: 1px solid white;
     border-radius: 5px;
-    text-align: center;
+    border: 1px solid #ddd;
+    padding: 0.75rem;
 }
 .input-search:focus{
     outline: none;
+}
+.cart-icon:hover{
+cursor: pointer;
+}
+.account-icon:hover{
+    cursor: pointer;
 }
