@@ -2,9 +2,7 @@
 import CartIcon, { AccountIcon } from "../Common/Icons/Icons"
 import "./header.css"
 import { useNavigate } from "react-router-dom"
-import Cookies from "js-cookie"
 import { useContext, useEffect, useState } from "react"
-import { verifyTokenRequest } from "../../api/auth"
 import { userContext } from "../../context/userContext/userContext"
 
 export default function Header (){
@@ -19,13 +17,19 @@ export default function Header (){
                 if(!isAuth && !userData && !isLoading){
                  navigate('/selectAccount')
                 }else{
-                 navigate('/Cart')
+                 navigate('/cart')
                 }
             }}/>
             <div className="account-icon-container" >
             <AccountIcon color='black' height='55px' width='50px' className='account-icon'  onClick={()=>{
-                navigate('/selectAccount')
+                if(!isAuth && !userData && !isLoading){
+
+                    navigate('/selectAccount')
+                }else{
+                     navigate('/profile')
+                }
             }} />
+            <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p>
          
             </div>
 

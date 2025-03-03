@@ -5,8 +5,9 @@ import HomePages from "./components/Pages/Home/HomePages";
 import AccountTypePages from "./components/Pages/AccountType/AccountTypePages";
 import SignUpBuyerPages from "./components/Pages/SignUpBuyer/SignUpBuyerPages";
 import SignInPages from "./components/Pages/SignIn/SignInPages";
-import CartPages from "./components/Pages/CartPages/CartPages";
+import CartPages from "./components/Pages/Cart/CartPages";
 import { UserContextProvider } from "./context/userContext/userContext";
+import ProfilePages from "./components/Pages/Profile/ProfilePages";
 
 export default function App() {
   return (
@@ -17,7 +18,8 @@ export default function App() {
         <Route path="/signUpSeller" element={<SignUpSellerPages />} />
         <Route path="/signIn" element={<SignInPages />} />
         <Route path="/signUpBuyer" element={<SignUpBuyerPages />} />
-        <Route path="/Cart" element={<CartPages />} />
+        <Route path="/cart" element={<CartPages />} />
+        <Route path="/profile" element={<ProfilePages />} />
       </Routes>
     </UserContextProvider>
   );
