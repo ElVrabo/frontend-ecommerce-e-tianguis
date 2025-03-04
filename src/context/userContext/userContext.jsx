@@ -40,8 +40,10 @@ export const UserContextProvider = ({ children }) => {
   async function signIn(data) {
     try {
       const res = await signInRequest(data);
-      if (res.data.message) {
+      if (res.data.user.role === 'comprador') {
         navigate("/");
+      }else if(res.data.user.role === 'vendedor') {
+        navigate('/dashboardSeller')
       }
     } catch (error) {
       setAlerts({ ...alerts, error: error.response.data.error });
@@ -69,7 +71,6 @@ export const UserContextProvider = ({ children }) => {
             setUserData(null);
             setIsLoading(false);
           } else {
-            console.log(res.data);
             setIsAuth(true);
             setUserData(res.data);
             setIsLoading(false);
