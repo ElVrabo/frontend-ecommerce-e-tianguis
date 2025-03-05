@@ -9,10 +9,12 @@ import CartPages from "./components/Pages/Cart/CartPages";
 import { UserContextProvider } from "./context/userContext/userContext";
 import ProfilePages from "./components/Pages/Profile/ProfilePages";
 import DashboardSeller from "./components/Pages/DashboardSeller/DashboardSeller";
+import { ProductContextProvider } from "./context/productsContext/productContext";
 
 export default function App() {
   return (
     <UserContextProvider>
+      <ProductContextProvider>
       <Routes>
         <Route path="/" element={<HomePages />} />
         <Route path="/selectAccount" element={<AccountTypePages />} />
@@ -23,6 +25,7 @@ export default function App() {
         <Route path="/profile" element={<ProfilePages />} />
         <Route path="/dashboardSeller" element={<DashboardSeller />} />
       </Routes>
+      </ProductContextProvider>
     </UserContextProvider>
   );
 }
