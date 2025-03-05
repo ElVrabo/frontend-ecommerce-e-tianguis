@@ -2,6 +2,7 @@ import "./home.css"
 import Header from "../../Header/Header"
 import { useContext, useEffect } from "react"
 import { productContext } from "../../../context/productsContext/productContext"
+import CardProducts from "../../CardProducts/CardProducts"
 
 export default function HomePages(){
     const {getAllProducts,listProducts,isLoading} = useContext(productContext)
@@ -29,13 +30,17 @@ export default function HomePages(){
              <h2>Ayuda</h2>
             </div>
         </section>
-        <section>
+        <section className="cards-products-container" >
           {listProducts && !isLoading && (
             listProducts.map((product)=>(
-                <div key={product._id} >
-                 <h2>{product.name}</h2>
-                 <p>{product.description}</p>
-                </div>
+               <CardProducts
+               key={product._id}
+               name={product.name}
+               description={product.description}
+               price={product.price}
+               stock={product.stock}
+               image={product.image}
+               />
             ))
           )}
         </section>
