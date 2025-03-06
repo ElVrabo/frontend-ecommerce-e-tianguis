@@ -18,6 +18,15 @@ export default function FormAddProducts() {
    async function handleOnSubmit(event){
     event.preventDefault()
       await addNewProduct(productData)
+      setProductData({
+        name:'',
+        description:'',
+        category:'',
+        price:'',
+        stock:'',
+        image:''
+      })
+      alert('el producto se agrego correctamente')
     }
 
     function handleOnChange(event){
@@ -33,33 +42,33 @@ export default function FormAddProducts() {
         <div className="input-group-products">
           <div className="input-field-products">
             <label htmlFor="name">Nombre:</label>
-            <input type="text" id="name" name="name" placeholder="Nombre del producto" required onChange={handleOnChange} />
+            <input type="text" id="name" name="name" value={productData.name} placeholder="Nombre del producto" required onChange={handleOnChange} />
           </div>
           <div className="input-field-products">
             <label htmlFor="description">Descripción:</label>
-            <input id="description" name="description" placeholder="Descripción del producto" required onChange={handleOnChange}></input>
+            <input id="description" name="description" value={productData.description}  placeholder="Descripción del producto" required onChange={handleOnChange}></input>
           </div>
         </div>
 
         <div className="input-group-products">
           <div className="input-field-products">
             <label htmlFor="category">Categoría:</label>
-            <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} />
+            <input type="text" id="category" name="category" value={productData.category}  placeholder="Categoría del producto" required onChange={handleOnChange} />
           </div>
           <div className="input-field-products">
             <label htmlFor="price">Precio:</label>
-            <input type="string" id="price" name="price" placeholder="Precio del producto" required onChange={handleOnChange} />
+            <input type="string" id="price" name="price" value={productData.price}  placeholder="Precio del producto" required onChange={handleOnChange} />
           </div>
         </div>
 
         <div className="input-group-products">
           <div className="input-field-products">
             <label htmlFor="stock">Stock:</label>
-            <input type="string" id="stock" name="stock" placeholder="Stock disponible" required onChange={handleOnChange}/>
+            <input type="string" id="stock" name="stock" value={productData.stock}  placeholder="Stock disponible" required onChange={handleOnChange}/>
           </div>
           <div className="input-field-products">
             <label htmlFor="image">Imagen:</label>
-            <input type="string" id="image" name="image" placeholder="ingresa una imagen" required onChange={handleOnChange} />
+            <input type="string" id="image" name="image" value={productData.image} placeholder="ingresa una imagen" required onChange={handleOnChange} />
           </div>
         </div>
 

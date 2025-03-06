@@ -21,8 +21,6 @@ async function getAllProducts(){
 async function addNewProduct(data){
     try {
         const res = await addNewProductRequest(data)
-        setIsLoading(false)
-        console.log(res.data.message)
     } catch (error) {
         console.log('a ocurrido el siguiente error', error.response.data.error)
     }
