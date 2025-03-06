@@ -72,7 +72,7 @@ export const UserContextProvider = ({ children }) => {
             setIsLoading(false);
           } else {
             setIsAuth(true);
-            setUserData(res.data);
+            setUserData(res.data.user);
             setIsLoading(false);
           }
         } catch (error) {

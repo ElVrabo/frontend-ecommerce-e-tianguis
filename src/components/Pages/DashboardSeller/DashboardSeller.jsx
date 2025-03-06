@@ -1,3 +1,6 @@
-  export default function DashboardSeller(){
-    return <h1>Panel de vendedor</h1>
-  }
+import Aside from "../../Aside/Aside";
+
+
+export default function DashboardSeller(){
+  return <Aside/>
+}
