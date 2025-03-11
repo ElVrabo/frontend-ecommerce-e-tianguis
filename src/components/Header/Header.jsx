@@ -4,15 +4,29 @@ import "./header.css"
 import { useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { userContext } from "../../context/userContext/userContext"
+import { productContext } from "../../context/productsContext/productContext"
 
 export default function Header (){
+    const [productName,setProductName] = useState('')
     const {isAuth,userData,isLoading} = useContext(userContext)
+    const {getProductByName} = useContext(productContext)
     
     const navigate = useNavigate()
+
+    useEffect(()=>{
+       async function loadProduct(){
+           await getProductByName(productName)
+       }
+       loadProduct()
+    },[productName])
+
+    function handleOnChange(event){
+        setProductName(event.target.value)
+    }
     return (
         <div className="header-container" >
             <h2>E-TIANGUIS</h2>
-            <input className="input-search"  type="text" />
+            <input className="input-search"  type="text" onChange={handleOnChange} />
             <CartIcon color='grey' height='45px' width='50px' className='cart-icon' onClick={()=>{
                 if(!isAuth && !userData && !isLoading){
                  navigate('/selectAccount')

@@ -1,5 +1,5 @@
 import { createContext,useState } from "react";
-import { addNewProductRequest, deleteProductByIdRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
+import { addNewProductRequest, deleteProductByIdRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
 
 
 export const productContext = createContext()
@@ -19,6 +19,14 @@ async function getAllProducts(){
     } catch (error) {
         console.log('A ocurrido el siguiente error', error.response.data.error)
     }
+}
+async function getProductByName(productName){
+  try {
+    const res = await getAllProductByNameRequest(productName)
+    setListProducts(res.data)
+  } catch (error) {
+    console.log('a ocurrido el siguiente error', error.response.data.error)
+  }
 }
 async function getProduct(id){
     try {
@@ -60,6 +68,7 @@ return (
     <productContext.Provider value={{
         getAllProducts,
         getProduct,
+        getProductByName,
         addNewProduct,
         deleteProduct,
         updateProduct,
