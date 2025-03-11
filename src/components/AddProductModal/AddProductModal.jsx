@@ -12,6 +12,7 @@ const style = {
     display:'flex',
     alignItemns:'center',
     bgcolor: 'background.paper',
+    border: '1px solid white',
     // boxShadow: 24,
     p: 4,
     borderRadius: 2,

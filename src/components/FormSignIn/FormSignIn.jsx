@@ -55,7 +55,7 @@ export default function FormSignIn() {
           <div className="alerts-container-signIn" >
          {alerts.error && <ErrorAlert type='error' text={alerts.error} onClose={() => setAlerts({ ...alerts, error: "" })} />}
         </div>
-            <div className="signin-google">
+            {/* <div className="signin-google">
                 <h2>O ingresa con</h2>
                 <div onClick={()=>{
                     alert('deseas iniciar sesion con google')
@@ -64,7 +64,7 @@ export default function FormSignIn() {
                      <h2>Google</h2>
                     
                 </div>
-            </div>
+            </div> */}
       </form>
     </section>
   );

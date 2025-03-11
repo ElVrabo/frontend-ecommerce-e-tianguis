@@ -11,6 +11,7 @@ import ProfilePages from "./components/Pages/Profile/ProfilePages";
 import DashboardSeller from "./components/Pages/DashboardSeller/DashboardSeller";
 import { ProductContextProvider } from "./context/productsContext/productContext";
 import FormAddProducts from "./components/Pages/DashboardSeller/FormAddProducts/FormAddProducts";
+import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsSeller/ListProducts";
 
 export default function App() {
   return (
@@ -26,6 +27,9 @@ export default function App() {
         <Route path="/profile" element={<ProfilePages />} />
         <Route path="/dashboardSeller" element={<DashboardSeller />} />
         <Route path="/addProducts" element={<FormAddProducts />} />
+        <Route path="/addProducts/:id" element={<FormAddProducts />} />
+        <Route path="/productsSeller" element={<ListProductsSeller />} />
+
       </Routes>
       </ProductContextProvider>
     </UserContextProvider>

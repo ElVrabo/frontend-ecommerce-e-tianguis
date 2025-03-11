@@ -1,7 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ButtonContained } from "../../../Common/Buttons/Buttons";
 import "./formAddProducts.css";
 import { productContext } from "../../../../context/productsContext/productContext";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function FormAddProducts() {
     const [productData,setProductData] = useState({
@@ -13,10 +14,47 @@ export default function FormAddProducts() {
         image:''
 
     })
-    const {addNewProduct} = useContext(productContext)
+    const {addNewProduct,getProduct,updateProduct,product} = useContext(productContext)
+    const {id} = useParams()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+      async function loadProduct() {
+        if (id) {
+          await getProduct(id);
+        }
+      }
+      loadProduct();
+    }, [id]); // Ejecuta solo cuando cambia el id
+    
+    useEffect(() => {
+      if (product) {
+        setProductData({
+          name: product.name || "",
+          description: product.description || "",
+          category: product.category || "",
+          price: product.price || "",
+          stock: product.stock || "",
+          image: product.image || "",
+        });
+      }
+    }, [product]); // Se ejecuta cuando product cambia
+    
 
    async function handleOnSubmit(event){
     event.preventDefault()
+     if(id){
+      await updateProduct(id,productData)
+     setProductData({
+      name:'',
+      description:'',
+      category:'',
+      price:'',
+      stock:'',
+      image:''
+    })
+     navigate('/productsSeller')
+    }else{
       await addNewProduct(productData)
       setProductData({
         name:'',
@@ -28,6 +66,7 @@ export default function FormAddProducts() {
       })
       alert('el producto se agrego correctamente')
     }
+     }
 
     function handleOnChange(event){
         setProductData((prevValue)=>({

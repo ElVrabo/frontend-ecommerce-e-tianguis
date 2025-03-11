@@ -29,7 +29,7 @@ export default function Header (){
                      navigate('/profile')
                 }
             }} />
-            <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p>
+            {/* <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p> */}
          
             </div>
 

@@ -2,12 +2,14 @@ import React, { useContext, useState } from 'react';
 import './aside.css';
 import { userContext } from '../../context/userContext/userContext';
 import AddProductModal from '../../components/AddProductModal/AddProductModal';
+import { useNavigate} from 'react-router-dom';
 
 export default function Aside() {
-  const { userData } = useContext(userContext);
+  const { userData, isLoading } = useContext(userContext);
   const [showProductsMenu, setShowProductsMenu] = useState(false);
   const [showOrdersMenu, setShowOrdersMenu] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate()
 
   const toggleProductsMenu = () => {
     setShowProductsMenu(!showProductsMenu);
@@ -33,7 +35,9 @@ export default function Aside() {
             {showProductsMenu && (
               <ul className="submenu">
                 <li onClick={handleOpenModal}>Añadir Producto</li>
-                <li>Ver Productos</li>
+                <li onClick={()=>{
+                   navigate('/productsSeller')
+                }} >Ver Productos</li>
               </ul>
             )}
           </li>
@@ -49,7 +53,9 @@ export default function Aside() {
         </ul>
       </aside>
       <main className="main-content">
-        <h1>Bienvenido {userData?.name}</h1>
+        {/* {!isLoading && userData ? (
+          <h1>Bienvenido {userData.name}</h1>
+        ):''} */}
         {/* <p>Contenido principal aquí...</p> */}
       </main>
 
