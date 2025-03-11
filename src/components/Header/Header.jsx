@@ -13,7 +13,7 @@ export default function Header (){
         <div className="header-container" >
             <h2>E-TIANGUIS</h2>
             <input className="input-search"  type="text" />
-            <CartIcon color='black' height='45px' width='50px' className='cart-icon' onClick={()=>{
+            <CartIcon color='grey' height='45px' width='50px' className='cart-icon' onClick={()=>{
                 if(!isAuth && !userData && !isLoading){
                  navigate('/selectAccount')
                 }else{
@@ -21,7 +21,7 @@ export default function Header (){
                 }
             }}/>
             <div className="account-icon-container" >
-            <AccountIcon color='black' height='55px' width='50px' className='account-icon'  onClick={()=>{
+            <AccountIcon color='grey' height='55px' width='50px' className='account-icon'  onClick={()=>{
                 if(!isAuth && !userData && !isLoading){
 
                     navigate('/selectAccount')
