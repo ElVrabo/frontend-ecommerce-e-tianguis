@@ -1,5 +1,5 @@
 import { createContext,useState } from "react";
-import { addNewProductRequest, deleteProductByIdRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
+import { addNewProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
 
 
 export const productContext = createContext()
@@ -15,7 +15,6 @@ async function getAllProducts(){
         const res = await getAllProductsRequest()
         setListProducts(res.data)
         setIsLoading(false)
-        console.log(res.data)
     } catch (error) {
         console.log('A ocurrido el siguiente error', error.response.data.error)
     }
@@ -25,8 +24,15 @@ async function getProductByName(productName){
     const res = await getAllProductByNameRequest(productName)
     setListProducts(res.data)
   } catch (error) {
-    console.log('a ocurrido el siguiente error', error.response.data.error)
+    // console.log('a ocurrido el siguiente error', error.response.data.error)
   }
+}
+async function getProductByCategory(productCategory){
+    try {
+        const res = await getAllProductByCategoryRequest(productCategory)
+        setListProducts(res.data)
+    } catch (error) {
+    }
 }
 async function getProduct(id){
     try {
@@ -69,6 +75,7 @@ return (
         getAllProducts,
         getProduct,
         getProductByName,
+        getProductByCategory,
         addNewProduct,
         deleteProduct,
         updateProduct,

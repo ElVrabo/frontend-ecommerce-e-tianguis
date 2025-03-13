@@ -8,16 +8,22 @@ import { productContext } from "../../context/productsContext/productContext"
 
 export default function Header (){
     const [productName,setProductName] = useState('')
-    const {isAuth,userData,isLoading} = useContext(userContext)
+    const {isAuth,userData,isLoading,logout} = useContext(userContext)
     const {getProductByName} = useContext(productContext)
     
     const navigate = useNavigate()
 
     useEffect(()=>{
-       async function loadProduct(){
-           await getProductByName(productName)
+       async function loadProductsByName(){
+        /*si no existe o cambia el estado productName, la peticion no se hara*/ 
+        if(!productName){
+        return
+        }else{
+
+            await getProductByName(productName)
+        }
        }
-       loadProduct()
+       loadProductsByName()
     },[productName])
 
     function handleOnChange(event){
@@ -46,6 +52,9 @@ export default function Header (){
             {/* <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p> */}
          
             </div>
+            <button onClick={()=>{
+                logout()
+            }} >Cerrar sesion</button>
 
         </div>
     )

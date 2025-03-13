@@ -1,11 +1,16 @@
 import "./home.css"
 import Header from "../../Header/Header"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import { productContext } from "../../../context/productsContext/productContext"
 import CardProducts from "../../CardProducts/CardProducts"
 
 export default function HomePages(){
-    const {getAllProducts,listProducts,isLoading} = useContext(productContext)
+    const [category,setCategory] = useState("")
+    const {getAllProducts,getProductByCategory,listProducts,isLoading} = useContext(productContext)
+
+    function handleOnChange(event){
+      setCategory(event.target.value)
+      }
 
     useEffect(()=>{
         async function loadProducts(){
@@ -13,17 +18,29 @@ export default function HomePages(){
         }
         loadProducts()
     },[])
+    useEffect(()=>{
+      async function loadProductsByCategory(){
+        if(!category){
+          return
+        }else{
+          await getProductByCategory(category)
+        }
+      }
+      loadProductsByCategory()
+      
+    },[category])
+ 
     return (
         <>
         <Header/>
         <section className="categorys-container" >
             <div className="items-category">
-             <select className="select-category" >
+             <select className="select-category" value={category} onChange={handleOnChange} >
                 <option value="" disabled >Categorias</option>
-                <option value="" >artesanias</option>
-                <option value="" >pinturas</option>
-                <option value="" >cocina</option>
-                <option value="" >accesorios</option>
+                <option value="artesanias"  >artesanias</option>
+                <option value="pinturas"  >pinturas</option>
+                <option value="cocina"  >cocina</option>
+                <option value="accesorios"  >accesorios</option>
              </select>
              <h2>Tendencias</h2>
              <h2>Ofertas</h2>
@@ -36,10 +53,12 @@ export default function HomePages(){
                <CardProducts
                key={product._id}
                name={product.name}
+               category={product.category}
                description={product.description}
                price={product.price}
                stock={product.stock}
                image={product.image}
+               productID={product._id}
                />
             ))
           )}

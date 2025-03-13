@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import {
+  getUserByIdRequest,
   signInRequest,
   signUpRequest,
   verifyTokenRequest,
@@ -49,11 +50,22 @@ export const UserContextProvider = ({ children }) => {
       setAlerts({ ...alerts, error: error.response.data.error });
     }
   }
+  async function getUserById(id){
+    try {
+      const res = await getUserByIdRequest(id)
+      setUserData(res.data.user)
+      console.log(res.data.user)
+      setIsLoading(false)
+    } catch (error) {
+      console.log('a ocurrido el siguiente error', error.response.data.error)
+    }
+  }
   function logout() {
     Cookies.remove("token");
     setIsAuth(false);
     setUserData(null);
     setIsLoading(false);
+    navigate('/signIn')
   }
 
   useEffect(() => {
@@ -61,7 +73,7 @@ export const UserContextProvider = ({ children }) => {
       const cookies = Cookies.get();
       if (!cookies.token) {
         setIsAuth(false);
-        setUserData(null);
+        // setUserData(null);
         setIsLoading(false);
       } else {
         try {
@@ -90,6 +102,7 @@ export const UserContextProvider = ({ children }) => {
         signUpSeller,
         signUpBuyer,
         signIn,
+        getUserById,
         logout,
         isAuth,
         userData,
