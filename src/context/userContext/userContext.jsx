@@ -46,6 +46,7 @@ export const UserContextProvider = ({ children }) => {
       }else if(res.data.user.role === 'vendedor') {
         navigate('/dashboardSeller')
       }
+      setIsAuth(true)
     } catch (error) {
       setAlerts({ ...alerts, error: error.response.data.error });
     }
@@ -54,7 +55,7 @@ export const UserContextProvider = ({ children }) => {
     try {
       const res = await getUserByIdRequest(id)
       setUserData(res.data.user)
-      console.log(res.data.user)
+      // console.log(res.data.user)
       setIsLoading(false)
     } catch (error) {
       console.log('a ocurrido el siguiente error', error.response.data.error)
@@ -70,27 +71,25 @@ export const UserContextProvider = ({ children }) => {
 
   useEffect(() => {
     async function checkLogin() {
-      const cookies = Cookies.get();
-      if (!cookies.token) {
+      const token = Cookies.get("token");
+      if (!token) {
         setIsAuth(false);
-        // setUserData(null);
         setIsLoading(false);
       } else {
         try {
-          const res = await verifyTokenRequest(cookies.token);
-          if (!res.data) {
-            setIsAuth(false);
-            setUserData(null);
-            setIsLoading(false);
-          } else {
+          const res = await verifyTokenRequest(token);
+          if (res.data) {
             setIsAuth(true);
             setUserData(res.data.user);
-            setIsLoading(false);
+          } else {
+            setIsAuth(false);
+            setUserData(null);
           }
         } catch (error) {
           setIsAuth(false);
           setUserData(null);
-          setIsLoading(false);
+        } finally {
+          setIsLoading(false);  // Que SOLO se ponga en false al final
         }
       }
     }

@@ -13,23 +13,27 @@ import { ProductContextProvider } from "./context/productsContext/productContext
 import FormAddProducts from "./components/Pages/DashboardSeller/FormAddProducts/FormAddProducts";
 import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsSeller/ListProducts";
 import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 export default function App() {
   return (
     <UserContextProvider>
       <ProductContextProvider>
       <Routes>
+        <Route element={<ProtectedRoutes/>} >
+        <Route path="/dashboardSeller" element={<DashboardSeller />} />
+        <Route path="/addProducts" element={<FormAddProducts />} />
+        <Route path="/addProducts/:id" element={<FormAddProducts />} />
+        <Route path="/productsSeller" element={<ListProductsSeller />} />
+        <Route path="/cart" element={<CartPages />} />
+        <Route path="/profile" element={<ProfilePages />} />
+       
+        </Route>
         <Route path="/" element={<HomePages />} />
         <Route path="/selectAccount" element={<AccountTypePages />} />
         <Route path="/signUpSeller" element={<SignUpSellerPages />} />
         <Route path="/signIn" element={<SignInPages />} />
         <Route path="/signUpBuyer" element={<SignUpBuyerPages />} />
-        <Route path="/cart" element={<CartPages />} />
-        <Route path="/profile" element={<ProfilePages />} />
-        <Route path="/dashboardSeller" element={<DashboardSeller />} />
-        <Route path="/addProducts" element={<FormAddProducts />} />
-        <Route path="/addProducts/:id" element={<FormAddProducts />} />
-        <Route path="/productsSeller" element={<ListProductsSeller />} />
         <Route path="/product/:id" element={<ProductDetails />} />
 
       </Routes>

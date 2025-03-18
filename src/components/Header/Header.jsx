@@ -8,7 +8,7 @@ import { productContext } from "../../context/productsContext/productContext"
 
 export default function Header (){
     const [productName,setProductName] = useState('')
-    const {isAuth,userData,isLoading,logout} = useContext(userContext)
+    // const {isAuth,userData,isLoading,logout} = useContext(userContext)
     const {getProductByName} = useContext(productContext)
     
     const navigate = useNavigate()
@@ -34,27 +34,18 @@ export default function Header (){
             <h2>E-TIANGUIS</h2>
             <input className="input-search"  type="text" onChange={handleOnChange} />
             <CartIcon color='grey' height='45px' width='50px' className='cart-icon' onClick={()=>{
-                if(!isAuth && !userData && !isLoading){
-                 navigate('/selectAccount')
-                }else{
-                 navigate('/cart')
-                }
+                navigate('/cart')
             }}/>
             <div className="account-icon-container" >
-            <AccountIcon color='grey' height='55px' width='50px' className='account-icon'  onClick={()=>{
-                if(!isAuth && !userData && !isLoading){
-
-                    navigate('/selectAccount')
-                }else{
-                     navigate('/profile')
-                }
-            }} />
+             <AccountIcon color='grey' height='55px' width='50px' className='account-icon' onClick={()=>{
+                navigate('/profile')
+             }}   /> 
             {/* <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p> */}
          
             </div>
-            <button onClick={()=>{
+            {/* <button onClick={()=>{
                 logout()
-            }} >Cerrar sesion</button>
+            }} >Cerrar sesion</button> */}
 
         </div>
     )

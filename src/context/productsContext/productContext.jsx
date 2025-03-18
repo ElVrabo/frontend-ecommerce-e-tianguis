@@ -1,12 +1,18 @@
 import { createContext,useState } from "react";
 import { addNewProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
+import { deleteProductsCartRequest, getProductsCartRequest, saveProductsCartRequest } from "../../api/cartProducts";
 
 
 export const productContext = createContext()
 
 export const ProductContextProvider = ({children})=>{
     const [listProducts,setListProducts] = useState(null)
+    const [listProductsCart,setListProductsCart] = useState(null)
     const [product,setProduct] = useState(null)
+    const [alerts,setAlerts] = useState({
+        success:'',
+        error:''
+    })
     const [isLoading,setIsLoading] = useState(true)
     // const [isChangeProducts,setIsChangeProducts] = useState(false)
 
@@ -16,7 +22,7 @@ async function getAllProducts(){
         setListProducts(res.data)
         setIsLoading(false)
     } catch (error) {
-        console.log('A ocurrido el siguiente error', error.response.data.error)
+        // console.log('A ocurrido el siguiente error', error.response.data.error)
     }
 }
 async function getProductByName(productName){
@@ -39,7 +45,7 @@ async function getProduct(id){
         const res = await getProductByIdRequest(id)
         setProduct(res.data)
     } catch (error) {
-        console.log('A ocurrido el siguiente error', error.response.data.error)
+        // console.log('A ocurrido el siguiente error', error.response.data.error)
     }
 }
 async function addNewProduct(data){
@@ -47,7 +53,7 @@ async function addNewProduct(data){
         const res = await addNewProductRequest(data)
         // setIsChangeProducts(true)
     } catch (error) {
-        console.log('a ocurrido el siguiente error', error.response.data.error)
+        // console.log('a ocurrido el siguiente error', error.response.data.error)
     }
 }
 
@@ -70,6 +76,35 @@ async function updateProduct(id,productData){
     }
 }
 
+async function getProductsCart(){
+    try {
+        const res = await getProductsCartRequest()
+        setListProductsCart(res.data)
+        setIsLoading(false)
+        setAlerts({...alerts, error:null})
+    } catch (error) {
+        setAlerts({...alerts,error:error.response.data.error})
+    }
+}
+async function saveProductsCart(product){
+    try {
+        const res = await saveProductsCartRequest(product)
+        setAlerts({...alerts, success:res.data.message})
+    } catch (error) {
+        setAlerts({...alerts,error:error.response.data.error})
+    }
+}
+async function deleteProductCart(id) {
+    try {
+        const res = await deleteProductsCartRequest(id)
+        if(res.status === 204){
+          setListProductsCart(listProductsCart.filter((product)=>product._id !== id))
+        }
+    } catch (error) {
+        
+    }
+}
+
 return (
     <productContext.Provider value={{
         getAllProducts,
@@ -79,9 +114,15 @@ return (
         addNewProduct,
         deleteProduct,
         updateProduct,
+        getProductsCart,
+        saveProductsCart,
+        deleteProductCart,
         listProducts,
+        listProductsCart,
         product,
         isLoading,
+        alerts,
+        setAlerts
         // isChangeProducts,
         // setIsChangeProducts
     }} >{children}</productContext.Provider>

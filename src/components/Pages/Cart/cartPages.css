@@ -1,0 +1,9 @@
+alerts-cartPages-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.alerts-cartPages-container h1{
+    color: red;
+}
