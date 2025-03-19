@@ -3,6 +3,7 @@ import {
   getUserByIdRequest,
   signInRequest,
   signUpRequest,
+  updateUserByIdRequest,
   verifyTokenRequest,
 } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +47,9 @@ export const UserContextProvider = ({ children }) => {
       }else if(res.data.user.role === 'vendedor') {
         navigate('/dashboardSeller')
       }
+      setUserData(res.data.user)
       setIsAuth(true)
+      setIsLoading(false)
     } catch (error) {
       setAlerts({ ...alerts, error: error.response.data.error });
     }
@@ -59,6 +62,15 @@ export const UserContextProvider = ({ children }) => {
       setIsLoading(false)
     } catch (error) {
       console.log('a ocurrido el siguiente error', error.response.data.error)
+    }
+  }
+
+  async function updateUserById(id,userData){
+    try {
+      const res = await updateUserByIdRequest(id,userData);
+      console.log(res.data.message)
+    } catch (error) {
+      
     }
   }
   function logout() {
@@ -81,6 +93,7 @@ export const UserContextProvider = ({ children }) => {
           if (res.data) {
             setIsAuth(true);
             setUserData(res.data.user);
+            setIsLoading(false)
           } else {
             setIsAuth(false);
             setUserData(null);
@@ -102,6 +115,7 @@ export const UserContextProvider = ({ children }) => {
         signUpBuyer,
         signIn,
         getUserById,
+        updateUserById,
         logout,
         isAuth,
         userData,

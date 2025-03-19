@@ -14,6 +14,7 @@ import FormAddProducts from "./components/Pages/DashboardSeller/FormAddProducts/
 import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsSeller/ListProducts";
 import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
 import ProtectedRoutes from "./ProtectedRoutes";
+import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/productsSeller" element={<ListProductsSeller />} />
         <Route path="/cart" element={<CartPages />} />
         <Route path="/profile" element={<ProfilePages />} />
+        <Route path="/editProfile" element={<EditProfilePages />} />
        
         </Route>
         <Route path="/" element={<HomePages />} />
