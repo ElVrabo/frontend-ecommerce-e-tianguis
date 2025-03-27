@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { userContext } from "../../../context/userContext/userContext";
 import { ButtonContained } from "../../Common/Buttons/Buttons";
 import { useNavigate } from "react-router-dom";
+import { BackIcon } from "../../Common/Icons/Icons";
 
 export default function ProfilePages() {
   const { userData, isAuth, isLoading, getUserById } = useContext(userContext);
@@ -39,6 +40,16 @@ export default function ProfilePages() {
            onClick={()=>{
               navigate(`/editProfile`)
            }}
+          />
+         
+          <BackIcon
+          height="50px"
+          width="50px"
+          cursor="pointer"
+          color="#2713C2"
+          onClick={()=>{
+            navigate('/')
+          }}
           />
           </div>
         </div>

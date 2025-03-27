@@ -68,7 +68,6 @@ export const UserContextProvider = ({ children }) => {
   async function updateUserById(id,userData){
     try {
       const res = await updateUserByIdRequest(id,userData);
-      console.log(res.data.message)
     } catch (error) {
       
     }
