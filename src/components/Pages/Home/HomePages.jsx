@@ -57,7 +57,7 @@ export default function HomePages(){
                description={product.description}
                price={product.price}
                stock={product.stock}
-               image={product.image}
+               image={product.file}
                productID={product._id}
                />
             ))

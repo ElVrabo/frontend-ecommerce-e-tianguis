@@ -53,7 +53,7 @@ async function addNewProduct(data){
         const res = await addNewProductRequest(data)
         // setIsChangeProducts(true)
     } catch (error) {
-        // console.log('a ocurrido el siguiente error', error.response.data.error)
+        console.log('a ocurrido el siguiente error', error.response.data.error)
     }
 }
 

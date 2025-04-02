@@ -7,12 +7,12 @@ import "./cardProducts.css"
 
       return (
         <div className="card-products" >
+             <img src={image} alt='Imagen del producto' />
             <h2>{name}</h2>
             <p>{category}</p>
             <p>{description}</p>
             <p>{price}</p>
             <p>{stock}</p>
-            <p>{image}</p>
            <div className="button-cardProducts-container" >
            <ButtonContained
             text="Detalles"

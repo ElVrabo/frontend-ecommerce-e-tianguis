@@ -28,9 +28,9 @@ export default function TableProducts() {
             <Table sx={{ height: 'auto', width: '90%' }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Nombre</TableCell>
+                        <TableCell>Imagen</TableCell>
                         {/* <TableCell>Descripción</TableCell> */}
-                        <TableCell>Categoría</TableCell>
+                        <TableCell>Nombre</TableCell>
                         <TableCell align="center">Precio</TableCell>
                         <TableCell align="center">Stock</TableCell>
                         <TableCell align="center">Acciones</TableCell>
@@ -45,9 +45,9 @@ export default function TableProducts() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {product.name}
+                                    <img src={product.file} alt='imagen del producto' style={{height:'50px', width:'100px'}} />
                                 </TableCell>
-                                <TableCell>{product.category}</TableCell>
+                                <TableCell>{product.name}</TableCell>
                                 <TableCell align="center">{product.price}</TableCell>
                                 <TableCell align="center">{product.stock}</TableCell>
                                 <TableCell align="center">
