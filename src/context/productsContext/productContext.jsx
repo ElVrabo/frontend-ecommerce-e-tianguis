@@ -51,6 +51,7 @@ async function getProduct(id){
 async function addNewProduct(data){
     try {
         const res = await addNewProductRequest(data)
+        return res.status
         // setIsChangeProducts(true)
     } catch (error) {
         console.log('a ocurrido el siguiente error', error.response.data.error)
@@ -61,7 +62,7 @@ async function deleteProduct(id){
     try {
         const res = await deleteProductByIdRequest(id)
         if(res.status === 204){
-            setListProducts(listProducts.filter((product) => product._id !==id))
+            setListProducts(prevProducts=>listProducts.filter((product) => product._id !==id))
         }
     } catch (error) {
     }
