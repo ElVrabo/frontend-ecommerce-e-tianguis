@@ -74,7 +74,7 @@ export default function FormAddProducts() {
       newFormData.append('cloud_name', 'dc16nkez3');
       
       try {
-          const res = await fetch('https://api.cloudinary.com/v1_1/dc16nkez3/image/upload/w_500,h_500,c_fill,b_white/f_auto/q_auto', {
+          const res = await fetch('https://api.cloudinary.com/v1_1/dc16nkez3/image/upload', {
               method: 'POST',
               body: newFormData,
           });
