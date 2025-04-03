@@ -7,7 +7,7 @@ import "./cardProducts.css"
 
       return (
         <div className="card-products" >
-             <img src={image} alt='Imagen del producto' />
+             <img className="img-products" src={image} alt='Imagen del producto' />
             <h2>{name}</h2>
             <p>{category}</p>
             <p>{description}</p>

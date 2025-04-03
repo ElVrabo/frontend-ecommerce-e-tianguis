@@ -58,6 +58,7 @@ export default function TableProducts() {
                                     width='100px'
                                     onClick={async()=>{
                                         await deleteProduct(product._id)
+                                        getAllProducts()
                                     }}
                                     />
                                    </div>

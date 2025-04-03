@@ -28,8 +28,9 @@ export default function FormAddProducts() {
             formData.append("price", product.price || "");
             formData.append("stock", product.stock || "");
             setProductData(formData);
+            console.log(product)
         }
-    }, [product]);
+    }, []);
 
     async function handleOnSubmit(event) {
       event.preventDefault();
@@ -45,9 +46,13 @@ export default function FormAddProducts() {
           setProductData(new FormData());
           navigate("/productsSeller");
       } else {
-          await addNewProduct(productData);
+          const res = await addNewProduct(productData);
           setProductData(new FormData());
+          if(res !== 201){
+            return
+          }
           alert("El producto se agregó correctamente");
+          
       }
     }
 
@@ -64,6 +69,7 @@ export default function FormAddProducts() {
       setProductData(newFormData);
     }
 
+<<<<<<< HEAD
     async function handleFileUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -94,7 +100,82 @@ export default function FormAddProducts() {
       } catch (error) {
           console.log('Ha ocurrido un error', error.error);
       }
+
+    async function removeBackground(file) {
+        const formData = new FormData();
+        formData.append("image_file", file);
+        formData.append("size", "auto");
+    
+        try {
+            const res = await fetch("https://api.remove.bg/v1.0/removebg", {
+                method: "POST",
+                headers: {
+                    "X-Api-Key": "mqVS62XPUsEP6EQoDn3waA7Y",
+                },
+                body: formData,
+            });
+    
+            if (!res.ok) {
+                // console.log("Error al quitar el fondo", res.status);
+                return null;
+            }
+    
+            const blob = await res.blob();
+            return URL.createObjectURL(blob); // URL de la imagen sin fondo
+        } catch (error) {
+            console.error("Error en remove.bg", error);
+            return null;
+        }
+
     }
+    async function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+    
+        // 1️⃣ Primero, eliminar el fondo con remove.bg
+        const imageUrlWithoutBg = await removeBackground(file);
+        if (!imageUrlWithoutBg) {
+            alert("Error al quitar el fondo de la imagen");
+            return;
+        }
+    
+        // 2️⃣ Convertir la imagen sin fondo en un Blob para subirla a Cloudinary
+        const response = await fetch(imageUrlWithoutBg);
+        const blob = await response.blob();
+        const fileWithoutBg = new File([blob], "image.png", { type: "image/png" });
+    
+        // 3️⃣ Subir la imagen procesada a Cloudinary
+        const newFormData = new FormData();
+        productData.forEach((val, key) => newFormData.append(key, val));
+        newFormData.append("file", fileWithoutBg);
+        newFormData.append("upload_preset", "project-react-ecommerce");
+        newFormData.append("cloud_name", "dc16nkez3");
+    
+        try {
+            const res = await fetch("https://api.cloudinary.com/v1_1/dc16nkez3/image/upload", {
+                method: "POST",
+                body: newFormData,
+            });
+    
+            if (!res.ok) {
+                console.log("Error al subir la imagen", res.status);
+                return;
+            }
+    
+            const imageUrl = await res.json();
+            console.log("Imagen subida con éxito:", imageUrl.url);
+    
+            // 4️⃣ Guardar la URL final en el estado
+            const updatedFormData = new FormData();
+            productData.forEach((val, key) => updatedFormData.append(key, val));
+            updatedFormData.append("file", imageUrl.url);
+            setProductData(updatedFormData);
+        } catch (error) {
+            console.log("Ha ocurrido un error al subir la imagen", error);
+        }
+    }
+    
+    
 
     return (
         <div className="form-products-container">
@@ -103,29 +184,36 @@ export default function FormAddProducts() {
                 <div className="input-group-products">
                     <div className="input-field-products">
                         <label htmlFor="name">Nombre:</label>
-                        <input type="text" id="name" name="name" placeholder="Nombre del producto" required onChange={handleOnChange} />
+                        <input type="text" id="name" name="name" value={productData.get('name') || ''} placeholder="Nombre del producto" required onChange={handleOnChange} />
                     </div>
                     <div className="input-field-products">
                         <label htmlFor="description">Descripción:</label>
-                        <input id="description" name="description" placeholder="Descripción del producto" required onChange={handleOnChange}></input>
+                        <input id="description" name="description" value={productData.get('description') ||''} placeholder="Descripción del producto" required onChange={handleOnChange}></input>
                     </div>
                 </div>
 
                 <div className="input-group-products">
                     <div className="input-field-products">
                         <label htmlFor="category">Categoría:</label>
-                        <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} />
+                        <select className="select-category-form" onChange={handleOnChange} name="category" value={productData.get('category') ||''}  >
+                            <option value='' disabled >Categorias</option>
+                            <option value='artesanias' >artesanias</option>
+                            <option value='pinturas' >pinturas</option>
+                            <option value='cocina' >cocina</option>
+                            <option value='accesorioas' >accesorios</option>
+                        </select>
+                        {/* <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} /> */}
                     </div>
                     <div className="input-field-products">
                         <label htmlFor="price">Precio:</label>
-                        <input type="text" id="price" name="price" placeholder="Precio del producto" required onChange={handleOnChange} />
+                        <input type="text" id="price" name="price" value={productData.get('price') ||''} placeholder="Precio del producto" required onChange={handleOnChange} />
                     </div>
                 </div>
 
                 <div className="input-group-products">
                     <div className="input-field-products">
                         <label htmlFor="stock">Stock:</label>
-                        <input type="text" id="stock" name="stock" placeholder="Stock disponible" required onChange={handleOnChange} />
+                        <input type="text" id="stock" name="stock" value={productData.get('stock') ||''} placeholder="Stock disponible" required onChange={handleOnChange} />
                     </div>
                     <div className="input-field-products">
                         <label htmlFor="image">Imagen:</label>
