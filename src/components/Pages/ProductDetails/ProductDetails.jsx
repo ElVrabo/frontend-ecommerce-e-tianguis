@@ -18,33 +18,39 @@ export default function ProductDetails() {
   }
 
   return (
-   <section className="product-detail-container" >
-     <div className="product-detail-card">
-      <h2 className="product-title">{productData.name}</h2>
-      <p className="product-description">{productData.description}</p>
-      <p className="product-price">$ {productData.price}</p>
-      <p className="product-stock">Stock: {productData.stock}</p>
-     <div className="button-add-cart" >
-     <ButtonContained
-       text="Añadir al carrito"
-       backgroundColor="#2713C2"
-       colorText="#fff"
-       width="250px"
-       height="45px"
-      onClick={async()=>{
-        if(!isLoading && !isAuth && !userData){
-          navigate('/signIn')
-          return
-        }
-        await saveProductsCart(productData)
-                
-      }}
-      />
-       <div className="alerts-signUpBuyer" >
-                  {alerts.success && <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />}
-                </div>
-     </div>
+    <section className="product-detail-container">
+    <div className="product-detail-card">
+      <img src={productData.file} alt="imagen del producto" />
+  
+      <div className="product-info">
+        <h2 className="product-title">{productData.name}</h2>
+        <p className="product-description">{productData.description}</p>
+        <p className="product-price">{productData.price}</p>
+        <p className="product-stock">Stock: {productData.stock}</p>
+  
+        <div className="button-add-cart">
+          <ButtonContained
+            text="Añadir al carrito"
+            backgroundColor="#2713C2"
+            colorText="#fff"
+            width="250px"
+            height="45px"
+            onClick={async () => {
+              if (!isLoading && !isAuth && !userData) {
+                navigate('/signIn');
+                return;
+              }
+              await saveProductsCart(productData);
+            }}
+          />
+          <div className="alerts-signUpBuyer">
+            {alerts.success && (
+              <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />
+            )}
+          </div>
+        </div>
+      </div>
     </div>
-   </section>
+  </section>
   );
 }

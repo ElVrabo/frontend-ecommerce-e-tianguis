@@ -3,10 +3,12 @@ import { ButtonContained } from "../../../Common/Buttons/Buttons";
 import "./formAddProducts.css";
 import { productContext } from "../../../../context/productsContext/productContext";
 import { useNavigate, useParams } from "react-router-dom";
+import { ErrorAlert, InfoAlert, SuccessAlert } from "../../../Common/Alerts/Alerts";
 
 export default function FormAddProducts() {
     const [productData, setProductData] = useState(new FormData());
-    const { addNewProduct, getProduct, updateProduct, product } = useContext(productContext);
+    const [loadImage,setLoadImage] = useState(true)
+    const { addNewProduct, getProduct, updateProduct, product,alerts,setAlerts } = useContext(productContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -28,16 +30,24 @@ export default function FormAddProducts() {
             formData.append("price", product.price || "");
             formData.append("stock", product.stock || "");
             setProductData(formData);
-            console.log(product)
         }
-    }, []);
+    }, [product]);
+
+    useEffect(()=>{
+      if(loadImage){
+        setAlerts({...alerts,info:'Cargando imagen'})
+      }else{
+        setAlerts({...alerts,info:'Imagen cargada'})
+      }
+    },[loadImage])
 
     async function handleOnSubmit(event) {
       event.preventDefault();
     
       // Verifica que la imagen haya sido cargada y añadida al FormData
-      if (!productData.has('file')) {
-          alert("Debes cargar una imagen antes de enviar el formulario");
+      if (!productData.has('file') ) {
+        console.log('no hay imagen')
+        //   setAlerts({...alerts,info:'Espera un momento, cargando imagen...'})
           return;
       }
       
@@ -48,10 +58,7 @@ export default function FormAddProducts() {
       } else {
           const res = await addNewProduct(productData);
           setProductData(new FormData());
-          if(res !== 201){
-            return
-          }
-          alert("El producto se agregó correctamente");
+          
           
       }
     }
@@ -97,13 +104,14 @@ export default function FormAddProducts() {
     }
     async function handleFileUpload(event) {
         const file = event.target.files[0];
-        if (!file) return;
+        if (!file){
+            return
+        }
     
         // 1️⃣ Primero, eliminar el fondo con remove.bg
         const imageUrlWithoutBg = await removeBackground(file);
-        if (!imageUrlWithoutBg) {
-            alert("Error al quitar el fondo de la imagen");
-            return;
+        if (!imageUrlWithoutBg ) {
+           return 
         }
     
         // 2️⃣ Convertir la imagen sin fondo en un Blob para subirla a Cloudinary
@@ -119,26 +127,33 @@ export default function FormAddProducts() {
         newFormData.append("cloud_name", "dc16nkez3");
     
         try {
+             setLoadImage(true)
             const res = await fetch("https://api.cloudinary.com/v1_1/dc16nkez3/image/upload", {
                 method: "POST",
                 body: newFormData,
             });
     
             if (!res.ok) {
-                console.log("Error al subir la imagen", res.status);
+                // console.log("Error al subir la imagen", res.status);
                 return;
             }
     
             const imageUrl = await res.json();
-            console.log("Imagen subida con éxito:", imageUrl.url);
-    
+            
             // 4️⃣ Guardar la URL final en el estado
             const updatedFormData = new FormData();
             productData.forEach((val, key) => updatedFormData.append(key, val));
             updatedFormData.append("file", imageUrl.url);
             setProductData(updatedFormData);
+            setLoadImage(false)
+            return
+            
+           
+    
+           
         } catch (error) {
-            console.log("Ha ocurrido un error al subir la imagen", error);
+            // console.log("Ha ocurrido un error al subir la imagen", error);
+            return
         }
     }
     
@@ -186,9 +201,16 @@ export default function FormAddProducts() {
                         <label htmlFor="image">Imagen:</label>
                         <input type="file" id="file" name="file" required onChange={handleFileUpload} />
                     </div>
+                </div >
+                <div className="alerts-form-add-products" >
+                    {alerts.success && <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />}
+                                {alerts.error && <ErrorAlert type="error" text={alerts.error} onClose={() => setAlerts({ ...alerts, error: "" })} />}
+                                {alerts.info && <InfoAlert type="info" text={alerts.info} onClose={() => setAlerts({ ...alerts, info: "" })} />}
                 </div>
-
+                  <div className="btn-form-add-products-container" >
+                    
                 <ButtonContained text="Enviar" backgroundColor="#2713C2" colorText="#fff" width="250px" height="45px" type="submit" />
+                  </div>
             </form>
         </div>
     );

@@ -50,7 +50,13 @@
   outline: none;
 }
 
-.product-form button {
+.btn-form-add-products-container{
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-form-add-products-container Button {
   width: 100%;
   padding: 10px;
   background-color: #2713C2;
@@ -61,7 +67,7 @@
   transition: background 0.3s ease;
 }
 
-.product-form button:hover {
+.btn-form-add-products-container Button:hover {
   background-color: #1a0d8a; /* Cambié el color al hacer hover */
 }
 

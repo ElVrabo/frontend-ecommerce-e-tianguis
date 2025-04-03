@@ -9,12 +9,12 @@ export default function CardProductsCart(props){
 
     return (
       <div className="card-products-cart" >
+        <img src={image} alt="imagen del producto en el carrito" />
           <h2>{name}</h2>
           <p>{category}</p>
           <p>{description}</p>
           <p>{price}</p>
           <p>{stock}</p>
-          <p>{image}</p>
          <div className="button-cardProductsCart-container" >
          <ButtonContained
           text="Eliminar"
