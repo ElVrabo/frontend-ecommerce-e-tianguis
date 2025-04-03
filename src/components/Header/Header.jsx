@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { userContext } from "../../context/userContext/userContext"
 import { productContext } from "../../context/productsContext/productContext"
+import AccountMenu from "c:/Users/Hector/Documents/E-TIANGUIS/frontend-ecommerce-e-tianguis/src/components/Common/Menus/MenuAcount"
 
 export default function Header (){
     const [productName,setProductName] = useState('')
@@ -37,9 +38,7 @@ export default function Header (){
                 navigate('/cart')
             }}/>
             <div className="account-icon-container" >
-             <AccountIcon color='grey' height='55px' width='50px' className='account-icon' onClick={()=>{
-                navigate('/profile')
-             }}   /> 
+             <AccountMenu /> 
             {/* <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p> */}
          
             </div>

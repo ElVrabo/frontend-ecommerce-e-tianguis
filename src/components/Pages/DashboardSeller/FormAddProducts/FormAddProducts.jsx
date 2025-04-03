@@ -69,6 +69,38 @@ export default function FormAddProducts() {
       setProductData(newFormData);
     }
 
+<<<<<<< HEAD
+    async function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const newFormData = new FormData();
+      productData.forEach((val, key) => newFormData.append(key, val));
+      newFormData.append("file", file);
+      newFormData.append('upload_preset', 'project-react-ecommerce');
+      newFormData.append('cloud_name', 'dc16nkez3');
+      
+      try {
+          const res = await fetch('https://api.cloudinary.com/v1_1/dc16nkez3/image/upload', {
+              method: 'POST',
+              body: newFormData,
+          });
+          if(!res.ok){
+            console.log('a ocurrido un error', res.status)
+            return
+          }
+          const imageUrl = await res.json();
+          console.log(imageUrl.url);
+          
+        
+          const updatedFormData = new FormData();
+          productData.forEach((val, key) => updatedFormData.append(key, val));
+          updatedFormData.append('file', imageUrl.url); 
+          setProductData(updatedFormData); 
+          
+      } catch (error) {
+          console.log('Ha ocurrido un error', error.error);
+      }
+
     async function removeBackground(file) {
         const formData = new FormData();
         formData.append("image_file", file);
@@ -94,6 +126,7 @@ export default function FormAddProducts() {
             console.error("Error en remove.bg", error);
             return null;
         }
+
     }
     async function handleFileUpload(event) {
         const file = event.target.files[0];
