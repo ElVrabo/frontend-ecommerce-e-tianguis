@@ -13,11 +13,12 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router-dom"
 import { userContext } from '../../../context/userContext/userContext';
+import { useState,useContext } from 'react';
 
 
 export default function AccountMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const {logout} = React.useContext(userContext)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const {logout} = useContext(userContext)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
