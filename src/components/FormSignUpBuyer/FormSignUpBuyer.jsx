@@ -1,7 +1,7 @@
 import "./formSignUpBuyer.css";
 import { FieldOutlined } from "../Common/Inputs/TextFields";
 import { ButtonContained } from "../Common/Buttons/Buttons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SuccessAlert, ErrorAlert } from "../Common/Alerts/Alerts";
 import { userContext } from "../../context/userContext/userContext";
 // import { SuccessAlert } from "../Common/Alerts/Alerts";
@@ -26,6 +26,12 @@ export default function FormSignUpBuyer() {
         event.preventDefault()
         await signUpBuyer(buyerData)
     }
+
+    useEffect(()=>{
+       setTimeout(()=>{
+         setAlerts({...alerts,success:null})
+       },0)
+    },[])
   return (
     <section className="form-signUp-buyer-container">
         <h1>Regístrate como comprador</h1>
@@ -40,6 +46,7 @@ export default function FormSignUpBuyer() {
                 type="text"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Ingresa tu nombre"
               />
             </div>
@@ -51,6 +58,7 @@ export default function FormSignUpBuyer() {
                 type="email"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Ingresa tu email"
               />
             </div>
@@ -62,6 +70,7 @@ export default function FormSignUpBuyer() {
                 type="tel"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Ingresa tu teléfono"
               />
             </div>
@@ -84,6 +93,7 @@ export default function FormSignUpBuyer() {
                 type="text"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Ingresa tu domicilio"
               />
             </div>
@@ -95,6 +105,7 @@ export default function FormSignUpBuyer() {
                 type="password"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Ingresa tu contraseña"
               />
             </div>
@@ -106,6 +117,7 @@ export default function FormSignUpBuyer() {
                 type="password"
                 className="form-input"
                 onChange={handleOnChange}
+                required
                 // placeholder="Confirma tu contraseña"
               />
             </div>

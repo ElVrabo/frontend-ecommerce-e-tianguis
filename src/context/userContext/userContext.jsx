@@ -23,7 +23,10 @@ export const UserContextProvider = ({ children }) => {
       const res = await signUpRequest(data);
       if (res.data.message) {
         setAlerts({ ...alerts, success: res.data.message });
-        navigate('/signIn')
+        setTimeout(()=>{
+          navigate('/signIn')
+
+        },3000)
       }
     } catch (error) {
       setAlerts({ ...alerts, error: error.response.data.error });
@@ -34,6 +37,10 @@ export const UserContextProvider = ({ children }) => {
       const res = await signUpRequest(data);
       if (res.data.message) {
         setAlerts({ ...alerts, success: res.data.message });
+        setTimeout(()=>{
+          navigate('/signIn')
+
+        },3000)
       }
     } catch (error) {
       setAlerts({ ...alerts, error: error.response.data.error });

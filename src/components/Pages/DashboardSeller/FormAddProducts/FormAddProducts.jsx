@@ -7,7 +7,7 @@ import { ErrorAlert, InfoAlert, SuccessAlert } from "../../../Common/Alerts/Aler
 
 export default function FormAddProducts() {
     const [productData, setProductData] = useState(new FormData());
-    const [loadImage,setLoadImage] = useState(true)
+    const [loadImage,setLoadImage] = useState(false)
     const { addNewProduct, getProduct, updateProduct, product,alerts,setAlerts } = useContext(productContext);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -34,10 +34,10 @@ export default function FormAddProducts() {
     }, [product]);
 
     useEffect(()=>{
-      if(loadImage){
-        setAlerts({...alerts,info:'Cargando imagen'})
+      if(loadImage === true){
+        setAlerts({...alerts,info:'Cargando imagen...'})
       }else{
-        setAlerts({...alerts,info:'Imagen cargada'})
+        setAlerts({...alerts,info:""})
       }
     },[loadImage])
 
@@ -107,10 +107,12 @@ export default function FormAddProducts() {
         if (!file){
             return
         }
+        setLoadImage(true)
     
         // 1️⃣ Primero, eliminar el fondo con remove.bg
         const imageUrlWithoutBg = await removeBackground(file);
         if (!imageUrlWithoutBg ) {
+            setLoadImage(false)
            return 
         }
     
@@ -127,13 +129,14 @@ export default function FormAddProducts() {
         newFormData.append("cloud_name", "dc16nkez3");
     
         try {
-             setLoadImage(true)
+            
             const res = await fetch("https://api.cloudinary.com/v1_1/dc16nkez3/image/upload", {
                 method: "POST",
                 body: newFormData,
             });
     
             if (!res.ok) {
+                setLoadImage(false)
                 // console.log("Error al subir la imagen", res.status);
                 return;
             }
@@ -146,6 +149,7 @@ export default function FormAddProducts() {
             updatedFormData.append("file", imageUrl.url);
             setProductData(updatedFormData);
             setLoadImage(false)
+            setAlerts({...alerts,info:'Imagen cargada'})
             return
             
            
