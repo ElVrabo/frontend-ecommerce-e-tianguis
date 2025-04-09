@@ -15,6 +15,7 @@ import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsS
 import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
 import ProtectedRoutes from "./ProtectedRoutes";
 import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
+import MenuProfilePages from "./components/Pages/Profile/MenuProfilePages/MenuProfilePages";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/cart" element={<CartPages />} />
         <Route path="/profile" element={<ProfilePages />} />
         <Route path="/editProfile" element={<EditProfilePages />} />
+        <Route path="/menuProfile" element={<MenuProfilePages />} />
        
         </Route>
         <Route path="/" element={<HomePages />} />

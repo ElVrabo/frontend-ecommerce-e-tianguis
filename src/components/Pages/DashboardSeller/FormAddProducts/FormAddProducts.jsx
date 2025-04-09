@@ -181,7 +181,7 @@ export default function FormAddProducts() {
                 <div className="input-group-products">
                     <div className="input-field-products">
                         <label htmlFor="category">Categoría:</label>
-                        <select className="select-category-form" onChange={handleOnChange} name="category" value={productData.get('category') ||''}  >
+                        <select className="select-category-form" onChange={handleOnChange} required name="category" value={productData.get('category') ||''}  >
                             <option value='' disabled >Categorias</option>
                             <option value='artesanias' >artesanias</option>
                             <option value='pinturas' >pinturas</option>
@@ -199,7 +199,7 @@ export default function FormAddProducts() {
                 <div className="input-group-products">
                     <div className="input-field-products">
                         <label htmlFor="stock">Stock:</label>
-                        <input type="text" id="stock" name="stock" value={productData.get('stock') ||''} placeholder="Stock disponible" required onChange={handleOnChange} />
+                        <input type="number" id="stock" name="stock" value={productData.get('stock') ||''} placeholder="Stock disponible" required onChange={handleOnChange} />
                     </div>
                     <div className="input-field-products">
                         <label htmlFor="image">Imagen:</label>

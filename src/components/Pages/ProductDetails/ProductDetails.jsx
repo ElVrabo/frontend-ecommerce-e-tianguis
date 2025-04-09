@@ -26,7 +26,7 @@ export default function ProductDetails() {
         <h2 className="product-title">{productData.name}</h2>
         <p className="product-description">{productData.description}</p>
         <p className="product-price">{productData.price}</p>
-        <p className="product-stock">Stock: {productData.stock}</p>
+        <p className="product-stock" style={{color: productData.stock <= 1 ? 'red' : 'black'}} >Stock: {productData.stock}</p>
   
         <div className="button-add-cart">
           <ButtonContained
