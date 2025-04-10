@@ -76,7 +76,6 @@ export default function FormAddProducts() {
       setProductData(newFormData);
     }
 
-<<<<<<< HEAD
     async function handleFileUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -251,4 +250,4 @@ export default function FormAddProducts() {
             </form>
         </div>
     );
-}
+}}
