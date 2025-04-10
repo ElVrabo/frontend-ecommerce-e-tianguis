@@ -16,6 +16,7 @@ import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
 import ProtectedRoutes from "./ProtectedRoutes";
 import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
 import ViewMenuProfilePages from "./components/Pages/Profile/ViewMenuProfilePages/ViewMenuProfilePages";
+import MenuProfilePages from "./components/Pages/Profile/MenuProfilePages/MenuProfilePages";
 
 export default function App() {
   return (
@@ -30,7 +31,7 @@ export default function App() {
         <Route path="/cart" element={<CartPages />} />
         <Route path="/profile" element={<ProfilePages />} />
         <Route path="/editProfile" element={<EditProfilePages />} />
-        <Route path="/profileMenu" element={<ViewMenuProfilePages />} />
+        <Route path="/menuProfile" element={<MenuProfilePages />} />
        
         </Route>
         <Route path="/" element={<HomePages />} />

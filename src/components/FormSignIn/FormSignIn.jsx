@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import googleIcon from "../../assets/images/google-removebg-preview.png"
 import { FieldOutlined } from "../Common/Inputs/TextFields";
 import { signInRequest } from "../../api/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ErrorAlert } from "../Common/Alerts/Alerts";
 import { userContext } from "../../context/userContext/userContext";
 
@@ -42,6 +42,10 @@ export default function FormSignIn() {
             <FieldOutlined type='password' name='password' value={userData.password} onChange={handleOnChange} className='field-password-signIn' />
           </div>
         </div>
+          <div className="link-register-container" >
+            <p>¿Eres nuevo?</p>
+            <Link to='/selectAccount' className="link-register" >¡Registrate!</Link>
+          </div>
           <div className="btn-send-formSignIn" >
           <ButtonContained
                      text="Enviar"

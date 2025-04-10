@@ -5,7 +5,7 @@ import AddProductModal from '../../components/AddProductModal/AddProductModal';
 import { useNavigate} from 'react-router-dom';
 
 export default function Aside() {
-  const { userData, isLoading } = useContext(userContext);
+  const { userData, isLoading,logout } = useContext(userContext);
   const [showProductsMenu, setShowProductsMenu] = useState(false);
   const [showOrdersMenu, setShowOrdersMenu] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -49,7 +49,7 @@ export default function Aside() {
               </ul>
             )}
           </li>
-          <li>Cerrar sesión</li>
+          <li onClick={logout} >Cerrar sesión</li>
         </ul>
       </aside>
       <main className="main-content">

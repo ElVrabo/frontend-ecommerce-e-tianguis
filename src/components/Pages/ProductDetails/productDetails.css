@@ -1,50 +1,54 @@
 .product-detail-container{
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 .product-detail-card {
-    width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  .product-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .product-description {
-    font-size: 16px;
-    color: #555;
-    margin: 10px 0;
-  }
-  
-  .product-price {
-    font-size: 20px;
-    color: #27ae60;
-    font-weight: bold;
-  }
-  
-  .product-stock {
-    font-size: 16px;
-    color: #e67e22;
-    font-weight: bold;
-  }
-  
-  .error-message {
-    text-align: center;
-    font-size: 18px;
-    color: red;
-  }
-  .button-add-cart{
-    margin-top: 20px;
-  }
-  
+  display: flex;
+  flex-direction: row; /* Set row to align image and text side by side */
+  align-items: center;
+  justify-content: space-between;
+  width: 600px; /* Increase width to accommodate both image and text */
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left; /* Align text to the left */
+  font-family: Arial, sans-serif;
+}
+
+.product-detail-card img {
+  width: 250px; 
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px; /* Add some spacing between image and text */
+}
+
+.product-info {
+  flex: 1; /* Allow the text content to take remaining space */
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-description {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+}
+
+.product-price, .product-stock {
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+}
+
+.button-add-cart {
+  margin-top: 20px;
+}

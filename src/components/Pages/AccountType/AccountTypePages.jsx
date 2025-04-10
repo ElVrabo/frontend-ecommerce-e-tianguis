@@ -7,7 +7,9 @@ export default function AccountTypePages(){
             <div className="select-account-type" >
                 <h2>¿Que tipo de cuenta deseas?</h2>
                 <div className="type-accounts" >
-                    <div>
+                    <div onClick={()=>{
+                        navigate('/signUpBuyer')
+                    }} >
                         <h3>Comprador</h3>
                     </div>
                     <div onClick={()=>{

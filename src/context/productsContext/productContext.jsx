@@ -51,10 +51,15 @@ async function getProduct(id){
 async function addNewProduct(data){
     try {
         const res = await addNewProductRequest(data)
-        return res.status
+        if (res.status === 201){
+            setAlerts({...alerts,success:res.data.message})
+            return
+        }
+        //    return
         // setIsChangeProducts(true)
     } catch (error) {
-        console.log('a ocurrido el siguiente error', error.response.data.error)
+        setAlerts({...alerts,error:error.response.data.error})
+
     }
 }
 
@@ -92,6 +97,7 @@ async function saveProductsCart(product){
         const res = await saveProductsCartRequest(product)
         setAlerts({...alerts, success:res.data.message})
     } catch (error) {
+        console.log('ocurrio el siguiente error', error.response.data.error)
         setAlerts({...alerts,error:error.response.data.error})
     }
 }

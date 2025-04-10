@@ -76,7 +76,7 @@
     width: 95%;
   }
   .btn-send-formSignIn{
-    margin-top: 35px;
+    margin-top: 20px;
   }
   .signin-google{
     display: flex;
@@ -168,5 +168,14 @@
   
   .submit-btn:focus {
     outline: none;
+  }
+  .link-register-container{
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+  }
+  .link-register{
+    color: #2713C2;
+    
   }
   

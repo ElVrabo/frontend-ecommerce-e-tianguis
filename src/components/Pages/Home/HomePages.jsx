@@ -53,10 +53,6 @@ export default function HomePages(){
                <CardProducts
                key={product._id}
                name={product.name}
-               category={product.category}
-               description={product.description}
-               price={product.price}
-               stock={product.stock}
                image={product.file}
                productID={product._id}
                />
