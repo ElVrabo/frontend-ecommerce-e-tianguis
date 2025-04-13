@@ -1,8 +1,20 @@
+.spinner-product-container{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-detail-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
 .product-detail-container{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* min-height: 100vh; */
 }
 .product-detail-card {
   display: flex;
@@ -50,5 +62,14 @@
 }
 
 .button-add-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-top: 20px;
+}
+
+.form-insertReview-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
 }

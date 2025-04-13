@@ -18,7 +18,7 @@ const style = {
     borderRadius: 2,
   };
   
-  export default function AddProductModal({ open, handleClose }) {
+  export default function ReusableModal({ open, handleClose,children }) {
     return (
       <Modal
         open={open}
@@ -27,7 +27,7 @@ const style = {
         aria-describedby="modal-description"
       >
         <Box sx={style}>
-          <FormAddProducts />
+          {children}
         </Box>
       </Modal>
     );

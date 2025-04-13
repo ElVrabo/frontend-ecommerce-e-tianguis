@@ -4,11 +4,11 @@ import Button from '@mui/material/Button';
 // import { Button } from "@chakra-ui/react"
 
 export function ButtonContained(props) {
-    const {text,backgroundColor,colorText,width,height,...rest} = props;
+    const {text,backgroundColor,colorText,width,height, border, ...rest} = props;
   return (
     // <Stack spacing={2} direction="row">
  
-      <Button variant='contained' style={{backgroundColor,color:colorText,width,height}} {...rest} >{text}</Button>
+      <Button variant='contained' style={{backgroundColor,color:colorText,width,height,border}} {...rest} >{text}</Button>
     // </Stack>
   );
 }

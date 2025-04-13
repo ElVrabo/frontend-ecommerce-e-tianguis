@@ -42,12 +42,14 @@
   padding: 10px;
   border: 1px solid #ddd; /* Añadí un borde para mejor visibilidad */
   border-radius: 5px;
-  background-color: #f4f2ee; /* Fondo claro para los inputs */
+  /* background-color: #f4f2ee; */
 }
 
 .product-form input:focus,
 .product-form textarea:focus {
+  border-color: #2713C2;
   outline: none;
+ 
 }
 
 .btn-form-add-products-container{

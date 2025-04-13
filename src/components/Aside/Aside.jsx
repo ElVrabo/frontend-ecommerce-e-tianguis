@@ -3,6 +3,8 @@ import './aside.css';
 import { userContext } from '../../context/userContext/userContext';
 import AddProductModal from '../../components/AddProductModal/AddProductModal';
 import { useNavigate} from 'react-router-dom';
+import FormAddProducts from '../Pages/DashboardSeller/FormAddProducts/FormAddProducts';
+import ReusableModal from '../../components/AddProductModal/AddProductModal';
 
 export default function Aside() {
   const { userData, isLoading,logout } = useContext(userContext);
@@ -59,7 +61,9 @@ export default function Aside() {
         {/* <p>Contenido principal aquí...</p> */}
       </main>
 
-      <AddProductModal open={openModal} handleClose={handleCloseModal} />
+      <ReusableModal open={openModal} handleClose={handleCloseModal}>
+        <FormAddProducts/>
+      </ReusableModal>
     </div>
   );
 }
