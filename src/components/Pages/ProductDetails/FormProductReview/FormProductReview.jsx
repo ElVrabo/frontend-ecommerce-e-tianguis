@@ -1,11 +1,13 @@
 import "./formProductReview.css";
 import { useContext, useState } from "react";
 import { productContext } from "../../../../context/productsContext/productContext";
+import { SuccessAlert } from "../../../Common/Alerts/Alerts";
+import { ButtonContained } from "../../../Common/Buttons/Buttons";
 
 export default function FormProductReview({ productId, userId }) {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
-  const { insertReviewProduct } = useContext(productContext);
+  const { insertReviewProduct,alerts,setAlerts } = useContext(productContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +51,25 @@ export default function FormProductReview({ productId, userId }) {
           required
         />
       </div>
-      <button type="submit" className="submit-review-btn">Enviar Reseña</button>
+      <div className="btn-send-review" >
+      <ButtonContained
+                      text="Enviar"
+                      backgroundColor="#2713C2"
+                      colorText="#fff"
+                      width="400px"
+                      height="45px"
+                      type='submit'
+                    />
+      </div>
+                    <div className="alerts-formInsertReview">
+                      {alerts.success && (
+                        <SuccessAlert
+                          type="success"
+                          text={alerts.success}
+                          onClose={() => setAlerts({ ...alerts, success: "" })}
+                        />
+                      )}
+                      </div>
     </form>
   );
 }

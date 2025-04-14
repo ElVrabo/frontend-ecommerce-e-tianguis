@@ -40,21 +40,12 @@
     border-color: #2713C2;
     outline: none;
   }
-  
-  .submit-review-btn {
-    background-color: #2713C2;
-    color: #fff;
-    border: none;
-    padding: 12px;
+  .btn-send-review{
+    display: flex;
+    justify-content: center;
     width: 100%;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s ease;
   }
-  
-  .submit-review-btn:hover {
-    background-color: #1f10a1;
+  .alerts-formInsertReview{
+    margin-top: 15px;
   }
   

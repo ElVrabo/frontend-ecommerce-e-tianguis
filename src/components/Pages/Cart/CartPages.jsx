@@ -4,7 +4,7 @@ import { productContext } from "../../../context/productsContext/productContext"
 import CardProductsCart from "../../CardProductsCart/CardProductsCart";
 
 export default function CartPages() {
-    const { getProductsCart, listProductsCart, isLoading, alerts } = useContext(productContext);
+    const { getProductsCart, listProductsCart, isLoading } = useContext(productContext);
 
     useEffect(() => {
         async function loadProductsCart() {
@@ -13,10 +13,10 @@ export default function CartPages() {
         loadProductsCart();
     }, []);
 
-    if (alerts.error) {
+    if (listProductsCart.length === 0 && !isLoading) {
         return (
             <div className="alerts-cartPages-container">
-                <h1>{alerts.error}</h1>
+                <h1>¡No hay ningun producto en el carrito!</h1>
             </div>
         );
     }
@@ -31,7 +31,6 @@ export default function CartPages() {
                         category={product.category}
                         description={product.description}
                         price={product.price}
-                        stock={product.stock}
                         image={product.image}
                         productID={product._id}
                     />

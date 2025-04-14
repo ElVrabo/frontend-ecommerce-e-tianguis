@@ -5,7 +5,7 @@ import { productContext } from "../../context/productsContext/productContext"
 
 export default function CardProductsCart(props){
    const {deleteProductCart,getProductsCart} = useContext(productContext)
-    const {name,category,description,price,stock,image,productID} = props
+    const {name,category,description,price,image,productID} = props
 
     return (
       <div className="card-products-cart" >
@@ -14,7 +14,7 @@ export default function CardProductsCart(props){
           <p>{category}</p>
           <p>{description}</p>
           <p>{price}</p>
-          <p>{stock}</p>
+          {/* <p>{stock}</p> */}
          <div className="button-cardProductsCart-container" >
          <ButtonContained
           text="Eliminar"
