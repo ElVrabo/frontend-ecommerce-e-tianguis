@@ -1,5 +1,5 @@
 import { createContext,useState } from "react";
-import { addNewProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, updateProductByIdRequest } from "../../api/products";
+import { addNewProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getProductByIdRequest, getReviewProductRequest, insertReviewProductRequest, updateProductByIdRequest } from "../../api/products";
 import { deleteProductsCartRequest, getProductsCartRequest, saveProductsCartRequest } from "../../api/cartProducts";
 
 
@@ -43,9 +43,8 @@ async function getProductByCategory(productCategory){
 async function getProduct(id){
     try {
         const res = await getProductByIdRequest(id)
-        setProduct(res.data)
+        return res.data
     } catch (error) {
-        // console.log('A ocurrido el siguiente error', error.response.data.error)
     }
 }
 async function addNewProduct(data){
@@ -112,6 +111,22 @@ async function deleteProductCart(id) {
     }
 }
 
+async function insertReviewProduct(data){
+try {
+    const res = await insertReviewProductRequest(data)
+    console.log(res.data.message)
+} catch (error) {
+    console.log('A ocurrido el siguiente error', error.response.data.error)
+}
+}
+async function getReviewProduct(id){
+    try {
+        const res = await getReviewProductRequest(id)
+        console.log(res)
+    } catch (error) {
+        console.log(' a ocurrido el siguiente error', error.response.data.error)
+    }
+}
 return (
     <productContext.Provider value={{
         getAllProducts,
@@ -129,7 +144,9 @@ return (
         product,
         isLoading,
         alerts,
-        setAlerts
+        setAlerts,
+        insertReviewProduct,
+        getReviewProduct
         // isChangeProducts,
         // setIsChangeProducts
     }} >{children}</productContext.Provider>
