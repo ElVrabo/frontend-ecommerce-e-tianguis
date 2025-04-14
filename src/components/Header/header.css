@@ -24,6 +24,10 @@
 .input-search:focus{
     outline: none;
 }
+.cartIcon-container{
+    display: flex;
+    /* gap: 5px; */
+}
 .cart-icon:hover{
 cursor: pointer;
 }

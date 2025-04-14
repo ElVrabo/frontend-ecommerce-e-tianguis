@@ -92,6 +92,7 @@ async function getProductsCart(){
 async function saveProductsCart(product){
     try {
         const res = await saveProductsCartRequest(product)
+        setListProductsCart(prev => [...prev, product]);
         setAlerts({...alerts, success:res.data.message})
     } catch (error) {
         setAlerts({...alerts,error:error.response.data.error})

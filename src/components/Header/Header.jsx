@@ -9,8 +9,9 @@ import AccountMenu from "../Common/Menus/MenuAccount"
 
 export default function Header (){
     const [productName,setProductName] = useState('')
+    const [productNumbersCart,setProductsNumberCart] = useState(0)
     // const {isAuth,userData,isLoading,logout} = useContext(userContext)
-    const {getProductByName} = useContext(productContext)
+    const {getProductByName,listProductsCart,getProductsCart} = useContext(productContext)
     
     const navigate = useNavigate()
 
@@ -27,6 +28,14 @@ export default function Header (){
        loadProductsByName()
     },[productName])
 
+    useEffect(()=>{
+         getProductsCart()
+    },[])
+
+    useEffect(()=>{
+          setProductsNumberCart(listProductsCart.length)
+    },[listProductsCart])
+
     function handleOnChange(event){
         setProductName(event.target.value)
     }
@@ -34,9 +43,14 @@ export default function Header (){
         <div className="header-container" >
             <h2>E-TIANGUIS</h2>
             <input className="input-search"  type="text" onChange={handleOnChange} />
+            <div className="cartIcon-container" >
             <CartIcon color='grey' height='45px' width='50px' className='cart-icon' onClick={()=>{
                 navigate('/cart')
             }}/>
+            <p style={{color: productNumbersCart.length <= '0' ? 'red':'black'}} >{productNumbersCart}</p>
+            </div>
+          
+           
             <div className="account-icon-container" >
             <AccountMenu />
             {/* <p>{!isAuth && !userData && !isLoading ? 'Ingresar':''}</p> */}
