@@ -8,6 +8,7 @@ import { ErrorAlert, SuccessAlert } from "../../Common/Alerts/Alerts";
 import FormProductReview from "./FormProductReview/FormProductReview";
 import { Spinner } from "../../Common/Spinner/Spinner";
 import ReusableModal from "../../AddProductModal/AddProductModal";
+import ListReviewsProducts from "./ListReviewsProduct/ListReviewsProduct";
 
 export default function ProductDetails() {
   const [productData, setProductData] = useState(null);
@@ -107,6 +108,7 @@ export default function ProductDetails() {
         </div>
         {/* <FormProductReview productId={id} userId={userData?.id} /> */}
       </section>
+      <ListReviewsProducts productId={id} />
       <ReusableModal open={openModal} handleClose={handleCloseModal}>
         <FormProductReview productId={id} userId={userData?.id} />
       </ReusableModal>

@@ -8,6 +8,7 @@ export const productContext = createContext()
 export const ProductContextProvider = ({children})=>{
     const [listProducts,setListProducts] = useState(null)
     const [listProductsCart,setListProductsCart] = useState([])
+    const [listReviewsProduct,setListReviewsProducts] = useState([])
     const [product,setProduct] = useState(null)
     const [alerts,setAlerts] = useState({
         success:'',
@@ -120,7 +121,11 @@ try {
 async function getReviewProduct(id){
     try {
         const res = await getReviewProductRequest(id)
+        setListReviewsProducts(res.data)
+        console.log(res.data)
     } catch (error) {
+        console.log('a ocurrido el siguiente error', error)
+        setListReviewsProducts([])
     }
 }
 return (
@@ -142,7 +147,8 @@ return (
         alerts,
         setAlerts,
         insertReviewProduct,
-        getReviewProduct
+        getReviewProduct,
+        listReviewsProduct
         // isChangeProducts,
         // setIsChangeProducts
     }} >{children}</productContext.Provider>
