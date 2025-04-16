@@ -9,3 +9,6 @@ export const getAllProductByCategoryRequest = (productCategory) => axios.get(`se
 
 export const deleteProductByIdRequest = (id) => axios.delete(`/products/${id}`)
 export const updateProductByIdRequest = (id,productData) => axios.put(`/products/${id}`, productData)
+
+export const insertReviewProductRequest = (data)=>axios.post('/reviewProducts', data)
+export const getReviewProductRequest = (id)=>axios.get(`/reviewProducts/${id}`)
