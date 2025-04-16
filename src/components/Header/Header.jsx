@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { userContext } from "../../context/userContext/userContext"
 import { productContext } from "../../context/productsContext/productContext"
-<<<<<<< HEAD
-import AccountMenu from "c:/Users/Hector/Documents/E-TIANGUIS/frontend-ecommerce-e-tianguis/src/components/Common/Menus/MenuAcount"
-=======
 import AccountMenu from "../Common/Menus/MenuAccount"
->>>>>>> ee09d618f17b44c8385c0b921a5d980a7f14fc29
 
 export default function Header (){
     const [productName,setProductName] = useState('')
