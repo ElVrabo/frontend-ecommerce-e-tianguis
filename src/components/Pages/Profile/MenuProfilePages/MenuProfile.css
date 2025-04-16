@@ -1,0 +1,62 @@
+
+.body {
+    display: grid;
+    place-items: center;
+    min-height: 80vh;
+    margin: 0;
+}
+
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    padding: 20px;;
+   
+}
+
+.menu-card {
+    position: relative;
+    z-index: 1;
+    background-color: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin: 2vw;
+    overflow: hidden;
+}
+
+.menu-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px; /* grosor del "borde" */
+    background: linear-gradient(45deg, rgb(7, 7, 7), rgb(56, 31, 197));
+    border-radius: 20px;
+    z-index: -1;
+
+    /* Compatibilidad con navegadores */
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
+
+
+.menu-card:hover {
+    background-color: #d9d9e0;
+}
+
+.menu-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-text {
+    font-size: 18px;
+    font-weight: bold;
+}

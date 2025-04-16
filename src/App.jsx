@@ -15,6 +15,7 @@ import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsS
 import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
 import ProtectedRoutes from "./ProtectedRoutes";
 import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
+import ViewMenuProfilePages from "./components/Pages/Profile/ViewMenuProfilePages/ViewMenuProfilePages";
 import MenuProfilePages from "./components/Pages/Profile/MenuProfilePages/MenuProfilePages";
 
 export default function App() {
