@@ -49,6 +49,7 @@ export default function ProductDetails() {
 
           <div className="product-info">
             <h2 className="product-title">{productData.name}</h2>
+            <p>Categoria: {productData.category}</p>
             <p className="product-description">{productData.description}</p>
             <p className="product-price">{productData.price}</p>
             <p
@@ -73,6 +74,16 @@ export default function ProductDetails() {
                   await saveProductsCart(productData);
                 }}
               />
+                  <ButtonContained
+                  text="Comprar ahora"
+                  className="btn-insert-review"
+                  backgroundColor="#ffffff"
+                  colorText="black"
+                  border="1px solid #2713C2 "
+                  width="250px"
+                  height="45px"
+                  onClick={handleOpenModal}
+                />
               {!userData ? (
                 ""
               ) : (

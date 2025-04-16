@@ -22,9 +22,12 @@ export default function CartPages() {
     }
 
     return (
+        <>
+            <h1 className="title-section-cart" >Mi carrito</h1>
         <section className="container-card-products-cart">
             {listProductsCart && !isLoading ? (
                 listProductsCart.map((product) => (
+                    <>
                     <CardProductsCart
                         key={product._id}
                         name={product.name}
@@ -34,10 +37,13 @@ export default function CartPages() {
                         image={product.image}
                         productID={product._id}
                     />
+                
+                    </>
                 ))
             ) : (
                 <p className="loading-message">Cargando productos...</p>
             )}
         </section>
+        </>
     );
 }

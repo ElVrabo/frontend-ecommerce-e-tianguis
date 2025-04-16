@@ -4,7 +4,7 @@ import { productContext } from "../../../../context/productsContext/productConte
 import CardReviewsProduct from "./CardReviewsProduct/CardReviewsProduct"
 
 
-export default function ListReviewsProducts({productId}){
+export default function ListReviewsProducts({productId,reviews}){
 
     const {getReviewProduct,listReviewsProduct,isLoading} = useContext(productContext)
 
@@ -13,7 +13,7 @@ export default function ListReviewsProducts({productId}){
             await getReviewProduct(productId)
       }
       loadReviews()
-    },[])
+    },[reviews])
     if(listReviewsProduct.length === 0){
         return <h1 style={{fontSize:"50px", color:"#555"}} >No hay reseñas del producto</h1>
     }

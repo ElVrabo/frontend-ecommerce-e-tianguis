@@ -7,7 +7,7 @@ import { ButtonContained } from "../../../Common/Buttons/Buttons";
 export default function FormProductReview({ productId, userId }) {
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
-  const { insertReviewProduct,alerts,setAlerts } = useContext(productContext);
+  const { insertReviewProduct,getReviewProduct,alerts,setAlerts } = useContext(productContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +19,7 @@ export default function FormProductReview({ productId, userId }) {
         comment,
       };
       await insertReviewProduct(review);
+      getReviewProduct(productId)
       setRating('');
       setComment('');
     } catch (error) {
