@@ -7,7 +7,8 @@ export const productContext = createContext()
 
 export const ProductContextProvider = ({children})=>{
     const [listProducts,setListProducts] = useState(null)
-    const [listProductsCart,setListProductsCart] = useState(null)
+    const [listProductsCart,setListProductsCart] = useState([])
+    const [listReviewsProduct,setListReviewsProducts] = useState([])
     const [product,setProduct] = useState(null)
     const [alerts,setAlerts] = useState({
         success:'',
@@ -86,17 +87,15 @@ async function getProductsCart(){
         const res = await getProductsCartRequest()
         setListProductsCart(res.data)
         setIsLoading(false)
-        setAlerts({...alerts, error:null})
     } catch (error) {
-        setAlerts({...alerts,error:error.response.data.error})
     }
 }
 async function saveProductsCart(product){
     try {
         const res = await saveProductsCartRequest(product)
+        setListProductsCart(prev => [...prev, product]);
         setAlerts({...alerts, success:res.data.message})
     } catch (error) {
-        console.log('ocurrio el siguiente error', error.response.data.error)
         setAlerts({...alerts,error:error.response.data.error})
     }
 }
@@ -114,17 +113,19 @@ async function deleteProductCart(id) {
 async function insertReviewProduct(data){
 try {
     const res = await insertReviewProductRequest(data)
-    console.log(res.data.message)
+    setAlerts({...alerts, success:res.data.message})
 } catch (error) {
-    console.log('A ocurrido el siguiente error', error.response.data.error)
+    setAlerts({...alerts,error:error.response.data.error})
 }
 }
 async function getReviewProduct(id){
     try {
         const res = await getReviewProductRequest(id)
-        console.log(res)
+        setListReviewsProducts(res.data)
+        console.log(res.data)
     } catch (error) {
-        console.log(' a ocurrido el siguiente error', error.response.data.error)
+        console.log('a ocurrido el siguiente error', error)
+        setListReviewsProducts([])
     }
 }
 return (
@@ -146,7 +147,8 @@ return (
         alerts,
         setAlerts,
         insertReviewProduct,
-        getReviewProduct
+        getReviewProduct,
+        listReviewsProduct
         // isChangeProducts,
         // setIsChangeProducts
     }} >{children}</productContext.Provider>
