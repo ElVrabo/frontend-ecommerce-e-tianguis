@@ -8,7 +8,7 @@ import { ErrorAlert, InfoAlert, SuccessAlert } from "../../../Common/Alerts/Aler
 export default function FormAddProducts() {
     const [productData, setProductData] = useState(new FormData());
     const [loadImage,setLoadImage] = useState(false)
-    const { addNewProduct, getProduct, updateProduct, product,alerts,setAlerts } = useContext(productContext);
+    const { addNewProduct, getProduct, getAllProducts, updateProduct, product,alerts,setAlerts } = useContext(productContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -57,6 +57,7 @@ export default function FormAddProducts() {
           navigate("/productsSeller");
       } else {
           const res = await addNewProduct(productData);
+          getAllProducts()
           setProductData(new FormData());
           
           
