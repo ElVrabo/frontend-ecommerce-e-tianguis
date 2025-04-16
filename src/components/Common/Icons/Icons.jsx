@@ -5,6 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FiEdit2 } from "react-icons/fi";
 import { IoIosArrowRoundBack } from "react-icons/io";
 
+
 export default function CartIcon(props){
     const {color,height,width, ...rest} = props
     return (
