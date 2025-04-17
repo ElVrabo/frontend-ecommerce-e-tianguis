@@ -1,17 +1,13 @@
-import "./listProducts.css"
 import Aside from "../../../Aside/Aside";
 import TableProducts from "./TableProducts";
 
- 
-
-
- export default function ListProductsSeller(){
+export default function ListProductsSeller() {
     return (
-           <section className="listProducts-seller-container" >
-           <Aside/>
-         {/* <div className="table-products-seller" > */}
-         <TableProducts/>
-         {/* </div> */}
-           </section>
-    )
- } 
+        <div className="flex min-h-screen">
+            <Aside />
+            <main className="flex-1 p-6 overflow-auto">
+                <TableProducts />
+            </main>
+        </div>
+    );
+}

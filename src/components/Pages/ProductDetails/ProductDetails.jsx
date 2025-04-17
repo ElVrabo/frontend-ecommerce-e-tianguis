@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { productContext } from "../../../context/productsContext/productContext";
-import "./ProductDetails.css"; // Importamos el archivo CSS
 import { ButtonContained } from "../../Common/Buttons/Buttons";
 import { userContext } from "../../../context/userContext/userContext";
 import { ErrorAlert, SuccessAlert } from "../../Common/Alerts/Alerts";
@@ -19,10 +18,6 @@ export default function ProductDetails() {
     useContext(productContext);
   const { id } = useParams();
   const navigate = useNavigate();
-  // const productData = listProducts.find((product) => product._id === id)
-
-  const handleOpenModal = () => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
 
   useEffect(() => {
     async function loadProduct() {
@@ -35,37 +30,52 @@ export default function ProductDetails() {
 
   if (isLoadingProduct) {
     return (
-      <section className="spinner-product-container">
-        <Spinner />
+      <section className="flex justify-center items-center min-h-[70vh]">
+        <Spinner className="h-12 w-12 text-primary-blue" />
       </section>
     );
   }
 
   return (
-    <main className="product-detail-main">
-      <section className="product-detail-container">
-        <div className="product-detail-card">
-          <img src={productData.file} alt="imagen del producto" />
+    <main className="py-8">
+      {/* Detalles del producto */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row bg-background-paper rounded-card shadow-md overflow-hidden">
+          {/* Imagen del producto */}
+          <div className="md:w-1/2 p-6 flex justify-center">
+            <img 
+              src={productData.file} 
+              alt={productData.name}
+              className="w-full max-w-md h-auto object-cover rounded-lg"
+            />
+          </div>
 
-          <div className="product-info">
-            <h2 className="product-title">{productData.name}</h2>
-            <p>Categoria: {productData.category}</p>
-            <p className="product-description">{productData.description}</p>
-            <p className="product-price">{productData.price}</p>
-            <p
-              className="product-stock"
-              style={{ color: productData.stock <= 1 ? "red" : "black" }}
-            >
-              Stock: {productData.stock}
+          {/* Información del producto */}
+          <div className="md:w-1/2 p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-card-title mb-4">
+              {productData.name}
+            </h2>
+            
+            <p className="text-base text-card-text mb-6">
+              {productData.description}
             </p>
+            
+            <div className="space-y-3 mb-6">
+              <p className="text-xl font-bold text-primary-blue">
+                ${parseFloat(productData.price).toFixed(2)}
+              </p>
+              <p className={`text-lg font-semibold ${
+                productData.stock <= 1 ? 'text-red-500' : 'text-card-text'
+              }`}>
+                Stock: {productData.stock}
+              </p>
+            </div>
 
-            <div className="button-add-cart">
+            {/* Botones */}
+            <div className="space-y-4">
               <ButtonContained
                 text="Añadir al carrito"
-                backgroundColor="#2713C2"
-                colorText="#fff"
-                width="250px"
-                height="45px"
+                className="w-full md:w-64"
                 onClick={async () => {
                   if (!isLoading && !isAuth && !userData) {
                     navigate("/signIn");
@@ -74,41 +84,25 @@ export default function ProductDetails() {
                   await saveProductsCart(productData);
                 }}
               />
-                  <ButtonContained
-                  text="Comprar ahora"
-                  className="btn-insert-review"
-                  backgroundColor="#ffffff"
-                  colorText="black"
-                  border="1px solid #2713C2 "
-                  width="250px"
-                  height="45px"
-                  onClick={handleOpenModal}
-                />
-              {!userData ? (
-                ""
-              ) : (
+              
+              {userData && (
                 <ButtonContained
                   text="Insertar una reseña"
-                  className="btn-insert-review"
-                  backgroundColor="#ffffff"
-                  colorText="black"
-                  border="1px solid #2713C2 "
-                  width="250px"
-                  height="45px"
+                  className="w-full md:w-64 bg-white text-card-title border border-primary-blue hover:bg-gray-50"
                   onClick={handleOpenModal}
                 />
               )}
-              <div className="alerts-signUpBuyer">
+
+              {/* Alertas */}
+              <div className="mt-4 space-y-2">
                 {alerts.success && (
                   <SuccessAlert
-                    type="success"
                     text={alerts.success}
                     onClose={() => setAlerts({ ...alerts, success: "" })}
                   />
                 )}
                 {alerts.error && (
                   <ErrorAlert
-                    type="error"
                     text={alerts.error}
                     onClose={() => setAlerts({ ...alerts, error: "" })}
                   />
@@ -117,15 +111,15 @@ export default function ProductDetails() {
             </div>
           </div>
         </div>
-        {/* <FormProductReview productId={id} userId={userData?.id} /> */}
       </section>
+
+      {/* Listado de reseñas */}
       <ListReviewsProducts productId={id} />
+
+      {/* Modal para reseñas */}
       <ReusableModal open={openModal} handleClose={handleCloseModal}>
         <FormProductReview productId={id} userId={userData?.id} />
       </ReusableModal>
-      {/* <section className="form-insertReview-container" >
-     <FormProductReview productId={id} userId={userData?.id} />
-  </section> */}
     </main>
   );
 }
