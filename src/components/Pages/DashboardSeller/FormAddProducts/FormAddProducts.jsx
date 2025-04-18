@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ErrorAlert, InfoAlert, SuccessAlert } from "../../../Common/Alerts/Alerts";
 import { Spinner } from "../../../Common/Spinner/Spinner";
 
-export default function FormAddProducts() {
+export default function FormAddProducts({ handleCloseModal }) {
     const [productData, setProductData] = useState(new FormData());
     const [loadImage, setLoadImage] = useState(false);
     const { addNewProduct, getProduct, updateProduct, product, alerts, setAlerts } = useContext(productContext);
@@ -52,11 +52,14 @@ export default function FormAddProducts() {
         if (id) {
             await updateProduct(id, productData);
             setProductData(new FormData());
-            navigate("/productsSeller");
+            handleCloseModal?.() || navigate("/productsSeller");
         } else {
             await addNewProduct(productData);
             setProductData(new FormData());
+            handleCloseModal?.();
         }
+
+        
     }
 
     function handleOnChange(event) {
@@ -131,16 +134,26 @@ export default function FormAddProducts() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md mt-8">
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
-                {id ? "Editar Producto" : "Añadir Producto"}
-            </h2>
+        <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md mt-8 transition-colors duration-300">
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
+                    {id ? "Editar Producto" : "Añadir Producto"}
+                </h2>
+                {handleCloseModal && (
+                    <button 
+                        onClick={handleCloseModal}
+                        className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                    >
+                        ✕
+                    </button>
+                )}
+            </div>
 
             <form onSubmit={handleOnSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Nombre */}
                     <div className="space-y-2">
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Nombre
                         </label>
                         <input
@@ -149,7 +162,7 @@ export default function FormAddProducts() {
                             name="name"
                             value={productData.get('name') || ''}
                             onChange={handleOnChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             placeholder="Nombre del producto"
                             required
                         />
@@ -157,7 +170,7 @@ export default function FormAddProducts() {
 
                     {/* Descripción */}
                     <div className="space-y-2">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Descripción
                         </label>
                         <textarea
@@ -165,7 +178,7 @@ export default function FormAddProducts() {
                             name="description"
                             value={productData.get('description') || ''}
                             onChange={handleOnChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             placeholder="Descripción del producto"
                             required
                             rows={3}
@@ -174,7 +187,7 @@ export default function FormAddProducts() {
 
                     {/* Categoría */}
                     <div className="space-y-2">
-                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Categoría
                         </label>
                         <select
@@ -182,10 +195,10 @@ export default function FormAddProducts() {
                             name="category"
                             value={productData.get('category') || ''}
                             onChange={handleOnChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             required
                         >
-                            <option value="" disabled>Selecciona una categoría</option>
+                            <option value="" disabled className="text-gray-400">Selecciona una categoría</option>
                             <option value="artesanias">Artesanías</option>
                             <option value="pinturas">Pinturas</option>
                             <option value="cocina">Cocina</option>
@@ -195,7 +208,7 @@ export default function FormAddProducts() {
 
                     {/* Precio */}
                     <div className="space-y-2">
-                        <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="price" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Precio
                         </label>
                         <input
@@ -204,7 +217,7 @@ export default function FormAddProducts() {
                             name="price"
                             value={productData.get('price') || ''}
                             onChange={handleOnChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             placeholder="Precio del producto"
                             required
                             min="0"
@@ -214,7 +227,7 @@ export default function FormAddProducts() {
 
                     {/* Stock */}
                     <div className="space-y-2">
-                        <label htmlFor="stock" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="stock" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Stock
                         </label>
                         <input
@@ -223,7 +236,7 @@ export default function FormAddProducts() {
                             name="stock"
                             value={productData.get('stock') || ''}
                             onChange={handleOnChange}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                             placeholder="Stock disponible"
                             required
                             min="0"
@@ -232,7 +245,7 @@ export default function FormAddProducts() {
 
                     {/* Imagen */}
                     <div className="space-y-2">
-                        <label htmlFor="file" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="file" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Imagen del producto
                         </label>
                         <div className="flex items-center gap-4">
@@ -241,16 +254,17 @@ export default function FormAddProducts() {
                                 id="file"
                                 name="file"
                                 onChange={handleFileUpload}
-                                className="block w-full text-sm text-gray-500
+                                className="block w-full text-sm text-gray-500 dark:text-gray-400
                                   file:mr-4 file:py-2 file:px-4
                                   file:rounded-lg file:border-0
                                   file:text-sm file:font-semibold
                                   file:bg-primary-blue file:text-white
-                                  hover:file:bg-primary-blue-dark"
+                                  hover:file:bg-primary-blue-dark
+                                  dark:file:bg-primary-blue-dark dark:hover:file:bg-primary-blue-darker"
                                 required={!id}
                                 accept="image/*"
                             />
-                            {loadImage && <Spinner className="h-5 w-5" />}
+                            {loadImage && <Spinner className="h-5 w-5 text-primary-blue dark:text-primary-blue-light" />}
                         </div>
                     </div>
                 </div>

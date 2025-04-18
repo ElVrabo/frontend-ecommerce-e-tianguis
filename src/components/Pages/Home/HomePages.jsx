@@ -31,7 +31,7 @@ export default function HomePages() {
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
                     <select 
                         className="
-                            w-full sm:w-auto px-4 py-2 rounded-card border border-input-border
+                            w-full sm:w-auto px-8 py-2 rounded-card border border-input-border
                             bg-input-filled-bg text-card-text focus:border-input-focus
                             focus:ring-2 focus:ring-primary-blue focus:ring-opacity-50
                             transition-input cursor-pointer hover:border-primary-blue
