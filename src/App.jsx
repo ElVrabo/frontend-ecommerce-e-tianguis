@@ -18,6 +18,7 @@ import ListProductsSeller from "./components/Pages/DashboardSeller/ListProductsS
 import ProductDetails from "./components/Pages/ProductDetails/ProductDetails";
 import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
 import MenuProfilePages from "./components/Pages/Profile/MenuProfilePages/MenuProfilePages";
+import ProductView from "./components/Pages/ProductView/ProductView";
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
               <Route path="/editProfile" element={<EditProfilePages />} />
               <Route path="/menuProfile" element={<MenuProfilePages />} />
             </Route>
+            <Route path="/productView" element={<ProductView />} />
             
             <Route path="/" element={<HomePages />} />
             <Route path="/selectAccount" element={<AccountTypePages />} />
@@ -42,6 +44,7 @@ export default function App() {
             <Route path="/signIn" element={<SignInPages />} />
             <Route path="/signUpBuyer" element={<SignUpBuyerPages />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            
           </Routes>
         </ProductContextProvider>
       </UserContextProvider>
