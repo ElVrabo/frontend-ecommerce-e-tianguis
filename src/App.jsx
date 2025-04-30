@@ -43,7 +43,7 @@ export default function App() {
             <Route path="/signUpSeller" element={<SignUpSellerPages />} />
             <Route path="/signIn" element={<SignInPages />} />
             <Route path="/signUpBuyer" element={<SignUpBuyerPages />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/product/:id" element={<ProductView />} />
             
           </Routes>
         </ProductContextProvider>
