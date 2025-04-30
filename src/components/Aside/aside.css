@@ -34,12 +34,12 @@
     background-color: #2713C2;
   }
   
-  .main-content {
+  /* .main-content {
     flex: 1;
     padding: 40px;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+  } */
   
   .main-content h1 {
     font-size: 28px;
@@ -49,6 +49,7 @@
   .main-content p {
     font-size: 16px;
   }
+  
   @media (max-width: 768px) {
     .dashboard-container {
       flex-direction: column;

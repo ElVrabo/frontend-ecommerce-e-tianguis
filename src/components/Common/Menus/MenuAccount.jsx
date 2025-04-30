@@ -1,128 +1,128 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from "react-router-dom";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import { useNavigate } from "react-router-dom"
 import { userContext } from '../../../context/userContext/userContext';
-import { Menu, Transition } from '@headlessui/react';
-import { 
-  FiUser, 
-  FiSettings, 
-  FiLogOut, 
-  FiUserPlus
-} from 'react-icons/fi';
+import { useState,useContext } from 'react';
+
 
 export default function AccountMenu() {
-  const { logout, userData } = useContext(userContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const {logout,userData} = useContext(userContext)
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const navigate = useNavigate();
 
-  return (
-    <Menu as="div" className="relative inline-block text-left">
-      <div>
-        <Menu.Button className="
-          flex items-center justify-center
-          rounded-full
-          focus:outline-none
-          focus:ring-2
-          focus:ring-primary-blue
-          focus:ring-offset-2
-          text-gray-600 hover:text-primary-blue
-          transition-colors
-        ">
-          <FiUser className="w-6 h-6" /> {/* Icono de usuario */}
-        </Menu.Button>
-      </div>
 
-      <Transition
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+
+  function handleOnChange(event){
+    setProductName(event.target.value)
+}
+
+
+  return (
+    <React.Fragment>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 41, height: 41 }}>{userData?.name[0]}</Avatar>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        slotProps={{
+          paper: {
+            elevation: 0,
+            sx: {
+              overflow: 'visible',
+              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              mt: 1.5,
+              '& .MuiAvatar-root': {
+                width: 32,
+                height: 32,
+                ml: -0.5,
+                mr: 1,
+              },
+              '&::before': {
+                content: '""',
+                display: 'block',
+                position: 'absolute',
+                top: 0,
+                right: 14,
+                width: 10,
+                height: 10,
+                bgcolor: 'background.paper',
+                transform: 'translateY(-50%) rotate(45deg)',
+                zIndex: 0,
+              },
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Menu.Items className="
-          absolute right-0 mt-2 w-56
-          origin-top-right
-          divide-y divide-gray-100
-          rounded-md
-          bg-white
-          shadow-lg
-          ring-1 ring-black ring-opacity-5
-          focus:outline-none
-          z-50
-        ">
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => navigate('/menuProfile')}
-                  className={`${
-                    active ? 'bg-primary-blue text-white' : 'text-gray-900'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  <FiUser className="mr-2 h-5 w-5" />
-                  Perfil
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => navigate('/profile')}
-                  className={`${
-                    active ? 'bg-primary-blue text-white' : 'text-gray-900'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  <FiUser className="mr-2 h-5 w-5" />
-                  Mi cuenta
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={() => navigate('/selectAccount')}
-                  className={`${
-                    active ? 'bg-primary-blue text-white' : 'text-gray-900'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  <FiUserPlus className="mr-2 h-5 w-5" />
-                  Añadir otra cuenta
-                </button>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  className={`${
-                    active ? 'bg-primary-blue text-white' : 'text-gray-900'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  <FiSettings className="mr-2 h-5 w-5" />
-                  Configuraciones
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-          
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={logout}
-                  className={`${
-                    active ? 'bg-primary-blue text-white' : 'text-gray-900'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  <FiLogOut className="mr-2 h-5 w-5" />
-                  Cerrar sesión
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+        <MenuItem onClick={()=>{
+                navigate('/menuProfile')
+             }}>
+          <Avatar /> Perfil
+        </MenuItem>
+        <MenuItem onClick={()=>{
+            navigate('/profile')
+        }}>
+          <Avatar /> Mis datos personales
+        </MenuItem>
+
+        <Divider />
+        <MenuItem onClick={()=>navigate('/selectAccount')}>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Añadir otra cuenta
+        </MenuItem>
+
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Configuraciones
+        </MenuItem>
+
+        <MenuItem onClick={logout}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Cerrar sesión
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 }

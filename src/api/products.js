@@ -12,3 +12,6 @@ export const updateProductByIdRequest = (id,productData) => axios.put(`/products
 
 export const insertReviewProductRequest = (data)=>axios.post('/reviewProducts', data)
 export const getReviewProductRequest = (id)=>axios.get(`/reviewProducts/${id}`)
+export const getFavoriteProductsRequest = ()=>axios.get('/favoriteProducts')
+export const saveFavoriteProductRequest = (data)=>axios.post('/favoriteProducts',data)
+export const deleteFavoriteProductRequest = (id)=>axios.delete(`/favoriteProducts/${id}`)
