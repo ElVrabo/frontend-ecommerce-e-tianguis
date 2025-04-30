@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { ButtonContained } from "../../../Common/Buttons/Buttons";
-import "./formAddProducts.css";
 import { productContext } from "../../../../context/productsContext/productContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { ErrorAlert, InfoAlert, SuccessAlert } from "../../../Common/Alerts/Alerts";
+import { Spinner } from "../../../Common/Spinner/Spinner";
 
 export default function FormAddProducts() {
     const [productData, setProductData] = useState(new FormData());
-    const [loadImage,setLoadImage] = useState(false)
-    const { addNewProduct, getProduct, getAllProducts, updateProduct, product,alerts,setAlerts } = useContext(productContext);
+    const [loadImage, setLoadImage] = useState(false);
+    const { addNewProduct, getProduct, updateProduct, product, alerts, setAlerts } = useContext(productContext);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -33,48 +33,38 @@ export default function FormAddProducts() {
         }
     }, [product]);
 
-    useEffect(()=>{
-      if(loadImage === true){
-        setAlerts({...alerts,info:'Cargando imagen...'})
-      }else{
-        setAlerts({...alerts,info:""})
-      }
-    },[loadImage])
+    useEffect(() => {
+        if (loadImage === true) {
+            setAlerts({ ...alerts, info: 'Cargando imagen...' });
+        } else {
+            setAlerts({ ...alerts, info: "" });
+        }
+    }, [loadImage]);
 
     async function handleOnSubmit(event) {
-      event.preventDefault();
-    
-      // Verifica que la imagen haya sido cargada y añadida al FormData
-      if (!productData.has('file') ) {
-        console.log('no hay imagen')
-        //   setAlerts({...alerts,info:'Espera un momento, cargando imagen...'})
-          return;
-      }
-      
-      if (id) {
-          await updateProduct(id, productData);
-          setProductData(new FormData());
-          navigate("/productsSeller");
-      } else {
-          const res = await addNewProduct(productData);
-          getAllProducts()
-          setProductData(new FormData());
-          
-          
-      }
+        event.preventDefault();
+
+        if (!productData.has('file') && !id) {
+            setAlerts({ ...alerts, error: "Debes subir una imagen del producto" });
+            return;
+        }
+
+        if (id) {
+            await updateProduct(id, productData);
+            setProductData(new FormData());
+            navigate("/productsSeller");
+        } else {
+            await addNewProduct(productData);
+            setProductData(new FormData());
+        }
     }
 
     function handleOnChange(event) {
-      const { name, value } = event.target;
-
-      // Crear una copia de productData sin borrar otros valores
-      const newFormData = new FormData();
-      productData.forEach((val, key) => newFormData.append(key, val));
-  
-      // Actualizar solo el campo modificado
-      newFormData.set(name, value);
-  
-      setProductData(newFormData);
+        const { name, value } = event.target;
+        const newFormData = new FormData();
+        productData.forEach((val, key) => newFormData.append(key, val));
+        newFormData.set(name, value);
+        setProductData(newFormData);
     }
 
     async function handleFileUpload(event) {
@@ -112,7 +102,7 @@ export default function FormAddProducts() {
         const formData = new FormData();
         formData.append("image_file", file);
         formData.append("size", "auto");
-    
+
         try {
             const res = await fetch("https://api.remove.bg/v1.0/removebg", {
                 method: "POST",
@@ -121,134 +111,229 @@ export default function FormAddProducts() {
                 },
                 body: formData,
             });
-    
-            if (!res.ok) {
-                // console.log("Error al quitar el fondo", res.status);
-                return null;
-            }
-    
-            const blob = await res.blob();
-            return URL.createObjectURL(blob); // URL de la imagen sin fondo
+
+            if (!res.ok) return null;
+            return await res.blob();
         } catch (error) {
             console.error("Error en remove.bg", error);
             return null;
         }
 
     }
+
     async function handleFileUpload(event) {
         const file = event.target.files[0];
-        if (!file){
-            return
-        }
-        setLoadImage(true)
-    
-        // 1️⃣ Primero, eliminar el fondo con remove.bg
+        if (!file) return;
+        setLoadImage(true);
+
         const imageUrlWithoutBg = await removeBackground(file);
-        if (!imageUrlWithoutBg ) {
-            setLoadImage(false)
-           return 
+        if (!imageUrlWithoutBg) {
+            setLoadImage(false);
+            return;
         }
-    
-        // 2️⃣ Convertir la imagen sin fondo en un Blob para subirla a Cloudinary
-        const response = await fetch(imageUrlWithoutBg);
-        const blob = await response.blob();
-        const fileWithoutBg = new File([blob], "image.png", { type: "image/png" });
-    
-        // 3️⃣ Subir la imagen procesada a Cloudinary
-        const newFormData = new FormData();
-        productData.forEach((val, key) => newFormData.append(key, val));
-        newFormData.append("file", fileWithoutBg);
-        newFormData.append("upload_preset", "project-react-ecommerce");
-        newFormData.append("cloud_name", "dc16nkez3");
-    
+
+        const fileWithoutBg = new File([imageUrlWithoutBg], "image.png", { type: "image/png" });
+        const cloudinaryFormData = new FormData();
+        cloudinaryFormData.append("file", fileWithoutBg);
+        cloudinaryFormData.append("upload_preset", "project-react-ecommerce");
+        cloudinaryFormData.append("cloud_name", "dc16nkez3");
+
         try {
-            
             const res = await fetch("https://api.cloudinary.com/v1_1/dc16nkez3/image/upload", {
                 method: "POST",
-                body: newFormData,
+                body: cloudinaryFormData,
             });
-    
+
             if (!res.ok) {
-                setLoadImage(false)
-                // console.log("Error al subir la imagen", res.status);
+                setLoadImage(false);
                 return;
             }
-    
+
             const imageUrl = await res.json();
-            
-            // 4️⃣ Guardar la URL final en el estado
             const updatedFormData = new FormData();
             productData.forEach((val, key) => updatedFormData.append(key, val));
             updatedFormData.append("file", imageUrl.url);
             setProductData(updatedFormData);
-            setLoadImage(false)
-            setAlerts({...alerts,info:'Imagen cargada'})
-            return
-            
-           
-    
-           
+            setLoadImage(false);
+            setAlerts({ ...alerts, info: 'Imagen cargada correctamente' });
         } catch (error) {
-            // console.log("Ha ocurrido un error al subir la imagen", error);
-            return
+            setLoadImage(false);
+            setAlerts({ ...alerts, error: "Error al subir la imagen" });
         }
     }
-    
-    
 
     return (
-        <div className="form-products-container">
-            <h2 className="form-products-title">Añadir Producto</h2>
-            <form className="product-form" onSubmit={handleOnSubmit}>
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="name">Nombre:</label>
-                        <input type="text" id="name" name="name" value={productData.get('name') || ''} placeholder="Nombre del producto" required onChange={handleOnChange} />
-                    </div>
-                    <div className="input-field-products">
-                        <label htmlFor="description">Descripción:</label>
-                        <input id="description" name="description" value={productData.get('description') ||''} placeholder="Descripción del producto" required onChange={handleOnChange}></input>
-                    </div>
-                </div>
+        <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md mt-8">
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
+                {id ? "Editar Producto" : "Añadir Producto"}
+            </h2>
 
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="category">Categoría:</label>
-                        <select className="select-category-form" onChange={handleOnChange} required name="category" value={productData.get('category') ||''}  >
-                            <option value='' disabled >Categorias</option>
-                            <option value='artesanias' >artesanias</option>
-                            <option value='pinturas' >pinturas</option>
-                            <option value='cocina' >cocina</option>
-                            <option value='accesorioas' >accesorios</option>
+            <form onSubmit={handleOnSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Nombre */}
+                    <div className="space-y-2">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                            Nombre
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={productData.get('name') || ''}
+                            onChange={handleOnChange}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            placeholder="Nombre del producto"
+                            required
+                        />
+                    </div>
+
+                    {/* Descripción */}
+                    <div className="space-y-2">
+                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+                            Descripción
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={productData.get('description') || ''}
+                            onChange={handleOnChange}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            placeholder="Descripción del producto"
+                            required
+                            rows={3}
+                        />
+                    </div>
+
+                    {/* Categoría */}
+                    <div className="space-y-2">
+                        <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+                            Categoría
+                        </label>
+                        <select
+                            id="category"
+                            name="category"
+                            value={productData.get('category') || ''}
+                            onChange={handleOnChange}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            required
+                        >
+                            <option value="" disabled>Selecciona una categoría</option>
+                            <option value="artesanias">Artesanías</option>
+                            <option value="pinturas">Pinturas</option>
+                            <option value="cocina">Cocina</option>
+                            <option value="accesorios">Accesorios</option>
                         </select>
-                        {/* <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} /> */}
                     </div>
-                    <div className="input-field-products">
-                        <label htmlFor="price">Precio:</label>
-                        <input type="text" id="price" name="price" value={productData.get('price') ||''} placeholder="Precio del producto" required onChange={handleOnChange} />
+
+                    {/* Precio */}
+                    <div className="space-y-2">
+                        <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+                            Precio
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value={productData.get('price') || ''}
+                            onChange={handleOnChange}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            placeholder="Precio del producto"
+                            required
+                            min="0"
+                            step="0.01"
+                        />
+                    </div>
+
+                    {/* Stock */}
+                    <div className="space-y-2">
+                        <label htmlFor="stock" className="block text-sm font-medium text-gray-700">
+                            Stock
+                        </label>
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            value={productData.get('stock') || ''}
+                            onChange={handleOnChange}
+                            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-transparent"
+                            placeholder="Stock disponible"
+                            required
+                            min="0"
+                        />
+                    </div>
+
+                    {/* Imagen */}
+                    <div className="space-y-2">
+                        <label htmlFor="file" className="block text-sm font-medium text-gray-700">
+                            Imagen del producto
+                        </label>
+                        <div className="flex items-center gap-4">
+                            <input
+                                type="file"
+                                id="file"
+                                name="file"
+                                onChange={handleFileUpload}
+                                className="block w-full text-sm text-gray-500
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-lg file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-primary-blue file:text-white
+                                  hover:file:bg-primary-blue-dark"
+                                required={!id}
+                                accept="image/*"
+                            />
+                            {loadImage && <Spinner className="h-5 w-5" />}
+                        </div>
                     </div>
                 </div>
 
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="stock">Stock:</label>
-                        <input type="number" id="stock" name="stock" value={productData.get('stock') ||''} placeholder="Stock disponible" required onChange={handleOnChange} />
-                    </div>
-                    <div className="input-field-products">
-                        <label htmlFor="image">Imagen:</label>
-                        <input type="file" id="file" name="file" required onChange={handleFileUpload} />
-                    </div>
-                </div >
-                <div className="alerts-form-add-products" >
-                    {alerts.success && <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />}
-                                {alerts.error && <ErrorAlert type="error" text={alerts.error} onClose={() => setAlerts({ ...alerts, error: "" })} />}
-                                {alerts.info && <InfoAlert type="info" text={alerts.info} onClose={() => setAlerts({ ...alerts, info: "" })} />}
+                {/* Alertas */}
+                <div className="space-y-2">
+                    {alerts.success && (
+                        <SuccessAlert
+                            type="success"
+                            text={alerts.success}
+                            onClose={() => setAlerts({ ...alerts, success: "" })}
+                        />
+                    )}
+                    {alerts.error && (
+                        <ErrorAlert
+                            type="error"
+                            text={alerts.error}
+                            onClose={() => setAlerts({ ...alerts, error: "" })}
+                        />
+                    )}
+                    {alerts.info && (
+                        <InfoAlert
+                            type="info"
+                            text={alerts.info}
+                            onClose={() => setAlerts({ ...alerts, info: "" })}
+                        />
+                    )}
                 </div>
-                  <div className="btn-form-add-products-container" >
-                    
-                <ButtonContained text="Enviar" backgroundColor="#2713C2" colorText="#fff" width="250px" height="45px" type="submit" />
-                  </div>
+
+                {/* Botón de envío */}
+                <div className="flex justify-center pt-4">
+                    <ButtonContained
+                        type="submit"
+                        className="w-full max-w-md"
+                        disabled={loadImage}
+                    >
+                        {loadImage ? (
+                            <div className="flex items-center justify-center gap-2">
+                                <Spinner className="h-5 w-5" />
+                                Procesando...
+                            </div>
+                        ) : (
+                            id ? "Actualizar Producto" : "Añadir Producto"
+                        )}
+                    </ButtonContained>
+                </div>
             </form>
         </div>
     );
+<<<<<<< HEAD
 }}
+=======
+}
+>>>>>>> 991908629281665b48d2397111af324eabee4f53
