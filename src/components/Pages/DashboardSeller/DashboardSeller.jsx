@@ -45,7 +45,9 @@ export default function DashboardSeller() {
             </div>
 
             <div className="action-buttons">
-              <button onClick={handleOpenModal}>+ Añadir producto</button>
+              <button onClick={()=>{
+                navigate('/addProducts')
+              }}>+ Añadir producto</button>
               <button onClick={() => navigate("/productsSeller")}>Ver productos</button>
             </div>
           </>
@@ -53,9 +55,9 @@ export default function DashboardSeller() {
           <p>Cargando información...</p>
         )}
 
-        <ReusableModal open={openModal} handleClose={handleCloseModal}>
+        {/* <ReusableModal open={openModal} handleClose={handleCloseModal}>
           <FormAddProducts />
-        </ReusableModal>
+        </ReusableModal> */}
       </main>
     </div>
   );

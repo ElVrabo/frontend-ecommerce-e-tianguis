@@ -11,6 +11,7 @@ export default function Aside() {
   const [showProductsMenu, setShowProductsMenu] = useState(false);
   const [showOrdersMenu, setShowOrdersMenu] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  // const [modalMode, setModalMode] = useState("add"); 
   const navigate = useNavigate()
 
   const toggleProductsMenu = () => {
@@ -23,7 +24,11 @@ export default function Aside() {
     setShowProductsMenu(false);
   };
 
-  const handleOpenModal = () => setOpenModal(true);
+  const handleOpenModal = () => {
+  // setModalMode("add");
+  setOpenModal(true);
+  }
+    
   const handleCloseModal = () => setOpenModal(false);
 
   return (
@@ -38,7 +43,9 @@ export default function Aside() {
             Productos
             {showProductsMenu && (
               <ul className="submenu">
-                <li onClick={handleOpenModal}>Añadir Producto</li>
+                <li onClick={()=>{
+                  navigate('/addProducts')
+                }}>Añadir Producto</li>
                 <li onClick={()=>{
                    navigate('/productsSeller')
                 }} >Ver Productos</li>
@@ -57,9 +64,9 @@ export default function Aside() {
         </ul>
       </aside>
 
-      <ReusableModal open={openModal} handleClose={handleCloseModal}>
+      {/* <ReusableModal open={openModal} handleClose={handleCloseModal}>
         <FormAddProducts/>
-      </ReusableModal>
+      </ReusableModal> */}
     </div>
   );
 }

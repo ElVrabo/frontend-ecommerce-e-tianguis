@@ -1,21 +1,30 @@
 .form-products-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-form {
   max-width: 500px;
-  margin: 20px auto;
+  margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* height: 100vh; */
   color: #000000; /* Cambié el color del texto a negro para mejor contraste */
-}
-
-.product-form {
-  width: 100%;
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-products-title {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 34px;
+  font-family: Garamond;
   color: #000000; /* Cambié el color del título a negro */
 }
 

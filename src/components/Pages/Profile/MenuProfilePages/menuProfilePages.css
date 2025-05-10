@@ -25,6 +25,7 @@
     padding: 30px;
     margin: 2vw;
     overflow: hidden;
+    /* display: flex; */
 }
 
 .menu-card::before {

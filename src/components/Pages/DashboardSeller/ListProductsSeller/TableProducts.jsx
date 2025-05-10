@@ -5,16 +5,21 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect,useState } from 'react';
 import { productContext } from '../../../../context/productsContext/productContext';
 import { ButtonContained } from '../../../Common/Buttons/Buttons';
 import { useNavigate} from 'react-router-dom';
 import { Delete } from '@mui/icons-material';
 import { DeleteIcon, UpdateIcon } from '../../../Common/Icons/Icons';
+// import ReusableModal from '../../../AddProductModal/AddProductModal';
+// import FormAddProducts from '../FormAddProducts/FormAddProducts';
 
 export default function TableProducts() {
+    // const [openModal, setOpenModal] = useState(false);
     const navigate = useNavigate()
     const { getAllProducts, deleteProduct, listProducts, isLoading } = useContext(productContext);
+
+
 
     useEffect(() => {
         async function loadProducts() {
@@ -72,6 +77,7 @@ export default function TableProducts() {
                                     width='100px'
                                     onClick={()=>{
                                         navigate(`/addProducts/${product._id}`)
+                                        // handleOpenModal()
                                     }}
                                     />
                                    </div>
@@ -82,6 +88,7 @@ export default function TableProducts() {
                     )}
                 </TableBody>
             </Table>
+            
         </TableContainer>
     );
 }

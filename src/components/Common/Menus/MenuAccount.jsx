@@ -102,19 +102,19 @@ export default function AccountMenu() {
         </MenuItem>
 
         <Divider />
-        <MenuItem onClick={()=>navigate('/selectAccount')}>
+        {/* <MenuItem onClick={()=>navigate('/selectAccount')}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
           Añadir otra cuenta
-        </MenuItem>
+        </MenuItem> */}
 
-        <MenuItem onClick={handleClose}>
+        {/* <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
           Configuraciones
-        </MenuItem>
+        </MenuItem> */}
 
         <MenuItem onClick={logout}>
           <ListItemIcon>

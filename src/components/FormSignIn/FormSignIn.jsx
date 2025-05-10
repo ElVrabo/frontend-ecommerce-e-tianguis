@@ -35,11 +35,11 @@ export default function FormSignIn() {
         <div className="fields-signIn-container" >
           <div className="email-signIn" >
             <label>Email:</label>
-            <FieldOutlined type='text' name='email' value={userData.email} onChange={handleOnChange} className='field-email-signIn'  />
+            <FieldOutlined type='text' name='email' value={userData.email} onChange={handleOnChange} className='field-email-signIn' required  />
           </div>
           <div className="password-signIn" >
             <label>Password:</label>
-            <FieldOutlined type='password' name='password' value={userData.password} onChange={handleOnChange} className='field-password-signIn' />
+            <FieldOutlined type='password' name='password' value={userData.password} onChange={handleOnChange} className='field-password-signIn' required />
           </div>
         </div>
           <div className="link-register-container" >

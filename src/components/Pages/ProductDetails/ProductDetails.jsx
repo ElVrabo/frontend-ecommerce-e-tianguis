@@ -14,7 +14,7 @@ export default function ProductDetails() {
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const { isLoading, isAuth, userData } = useContext(userContext);
-  const { listProducts, saveProductsCart, alerts, setAlerts, getProduct,productDetails,saveFavoriteProduct } =
+  const { listProducts, saveProductsCart, alerts, setAlerts, getProduct,product,saveFavoriteProduct } =
     useContext(productContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ export default function ProductDetails() {
     loadProduct();
   }, [id]);
 
-  if ( !productDetails &&isLoadingProduct) {
+  if ( !product &&isLoadingProduct) {
     return (
       <section className="spinner-product-container">
         <Spinner />
@@ -43,18 +43,18 @@ export default function ProductDetails() {
     <main className="product-detail-main">
       <section className="product-detail-container">
         <div className="product-detail-card">
-          <img src={productDetails.file} alt="imagen del producto" />
+          <img src={product.file} alt="imagen del producto" />
 
           <div className="product-info">
-            <h2 className="product-title">{productDetails.name}</h2>
-            <p>Categoria: {productDetails.category}</p>
-            <p className="product-description">{productDetails.description}</p>
-            <p className="product-price">{productDetails.price}</p>
+            <h2 className="product-title">{product.name}</h2>
+            <p>Categoria: {product.category}</p>
+            <p className="product-description">{product.description}</p>
+            <p className="product-price">{product.price}</p>
             <p
               className="product-stock"
-              style={{ color: productDetails.stock <= 1 ? "red" : "black" }}
+              style={{ color: product.stock <= 1 ? "red" : "black" }}
             >
-              Stock: {productDetails.stock}
+              Stock: {product.stock}
             </p>
 
             <div className="button-add-cart">
@@ -69,7 +69,7 @@ export default function ProductDetails() {
                     navigate("/signIn");
                     return;
                   }
-                  await saveProductsCart(productDetails);
+                  await saveProductsCart(product);
                 }}
               />
                <ButtonContained
@@ -83,7 +83,7 @@ export default function ProductDetails() {
                     navigate("/signIn");
                     return;
                   }
-                  await saveFavoriteProduct(productDetails);
+                  await saveFavoriteProduct(product);
                 }}
               />
                   <ButtonContained

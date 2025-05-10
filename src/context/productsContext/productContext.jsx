@@ -12,6 +12,7 @@ export const ProductContextProvider = ({children})=>{
     const [listReviewsProduct,setListReviewsProducts] = useState([])
     const [favoriteProducts,setFavoriteProducts] = useState([])
     const [productDetails,setProductDetails] = useState(null)
+    const [product,setProduct] = useState(null)
     const [alerts,setAlerts] = useState({
         success:'',
         error:''
@@ -46,7 +47,9 @@ async function getProductByCategory(productCategory){
 async function getProduct(id){
     try {
         const res = await getProductByIdRequest(id)
-        setProductDetails(res.data)
+        setProduct(res.data)
+        // setProductDetails(res.data)
+        // return res.data
     } catch (error) {
     }
 }
@@ -67,10 +70,9 @@ async function addNewProduct(data){
 
 async function deleteProduct(id){
     try {
+        setListProducts(prevProducts=>listProducts.filter((product) => product._id !==id))
         const res = await deleteProductByIdRequest(id)
-        if(res.status === 204){
-            setListProducts(prevProducts=>listProducts.filter((product) => product._id !==id))
-        }
+       
     } catch (error) {
     }
 }
@@ -127,7 +129,7 @@ async function getReviewProduct(id){
         const res = await getReviewProductRequest(id)
         setListReviewsProducts(res.data)
     } catch (error) {
-        console.log('a ocurrido el siguiente error', error)
+        // console.log('a ocurrido el siguiente error', error)
         setListReviewsProducts([])
     }
 }
@@ -144,7 +146,7 @@ async function saveFavoriteProduct(data){
     try {
        const res = await saveFavoriteProductRequest(data)
         if(res.status === 201){
-            console.log('se agrego a favoritos')
+            setAlerts({...alerts, success:res.data.message})
             return
         }
     } catch (error) {
@@ -153,10 +155,10 @@ async function saveFavoriteProduct(data){
 }
 async function deleteFavoriteProduct(id){
     try {
-        setFavoriteProducts(listFavoriteProducts.filter((product)=>product._id !== id))
+        setFavoriteProducts(favoriteProducts.filter((product)=>product._id !== id))
         await deleteFavoriteProductRequest(id)
     } catch (error) {
-        
+        console.log('a ocurrido el siguiente error', error)
     }
 }
 return (
@@ -179,11 +181,12 @@ return (
         insertReviewProduct,
         getReviewProduct,
         listReviewsProduct,
-        productDetails
-        ,getFavoriteProducts,
+        productDetails,
+        getFavoriteProducts,
         favoriteProducts,
         saveFavoriteProduct,
-        deleteFavoriteProduct
+        deleteFavoriteProduct,
+        product
         // isChangeProducts,
         // setIsChangeProducts
     }} >{children}</productContext.Provider>
