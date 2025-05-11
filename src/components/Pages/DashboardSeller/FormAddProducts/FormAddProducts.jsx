@@ -189,109 +189,164 @@ export default function FormAddProducts() {
     
 
     return (
-        <div className="form-products-container">
-            <h2 className="form-products-title">{id ? 'Editar producto' : 'Añadir producto'}</h2>
-            <form className="product-form" onSubmit={handleOnSubmit}>
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="name">Nombre:</label>
-                        <input type="text" id="name" name="name" value={productData.name} placeholder="Nombre del producto" required onChange={handleOnChange} />
-                    </div>
-                    <div className="input-field-products">
-                        <label htmlFor="description">Descripción:</label>
-                        <input id="description" name="description" value={productData.description} placeholder="Descripción del producto" required onChange={handleOnChange}></input>
-                    </div>
-                </div>
-
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="category">Categoría:</label>
-                        <select className="select-category-form" onChange={handleOnChange} required name="category" value={productData.category}  >
-                            <option value='' disabled >Categorias</option>
-                            <option value='artesanias' >artesanias</option>
-                            <option value='pinturas' >pinturas</option>
-                            <option value='cocina' >cocina</option>
-                            <option value='accesorios' >accesorios</option>
-                        </select>
-                        {/* <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} /> */}
-                    </div>
-                   {productData.offer ? (
-  <>
-    <div className="input-field-products">
-      <label htmlFor="price">Precio original:</label>
-      <input
-        type="text"
-        id="price"
-        name="price"
-        value={productData.price}
-        placeholder="Precio sin oferta"
-        required
-        onChange={handleOnChange}
-      />
-    </div>
-    <div className="input-field-products">
-      <label htmlFor="offerPrice">Precio con oferta:</label>
-      <input
-        type="text"
-        id="offerPrice"
-        name="offerPrice"
-        value={productData.offerPrice}
-        placeholder="Precio con descuento"
-        required
-        onChange={handleOnChange}
-      />
-    </div>
-  </>
-) : (
-  <div className="input-field-products">
-    <label htmlFor="price">Precio:</label>
-    <input
-      type="text"
-      id="price"
-      name="price"
-      value={productData.price}
-      placeholder="Precio del producto"
-      required
-      onChange={handleOnChange}
-    />
-  </div>
-)}
-
-                </div>
-
-                <div className="input-group-products">
-                    <div className="input-field-products">
-                        <label htmlFor="stock">Stock:</label>
-                        <input type="number" id="stock" name="stock" value={productData.stock} placeholder="Stock disponible" required onChange={handleOnChange} />
-                    </div>
-                    <div className="input-field-products">
-                        <label htmlFor="image">Imagen:</label>
-                        <input type="file" id="file" name="file" required onChange={handleFileUpload} />
-                    </div>
-                </div >
-                <div className="input-group-products">
-                    <div className="input-field-products checkbox-container ">
-                       
-                        <input type="checkbox" id="offer" name="offer" value={productData?.offer} checked={productData.offer ? true :false} onChange={handleChecked} />
-                          <label style={{marginTop:"5px"}} htmlFor="offer">Oferta</label>
-                    </div>
-                   {productData.offer ? (
-                     <div className="input-field-products ">
-                        <label htmlFor="image">Fecha de vencimiento:</label>
-                        <input type="date" id="offerExpire" name="offerExpire" value={productData?.offerExpire}  onChange={handleOnChange} />
-                    </div>
-                   ):''}
-                </div >
-                <div className="alerts-form-add-products" >
-                    {/* {alerts.success && <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />} */}
-                                {alerts.error && <ErrorAlert type="error" text={alerts.error} onClose={() => setAlerts({ ...alerts, error: "" })} />}
-                                {alerts.info && <InfoAlert type="info" text={alerts.info} onClose={() => setAlerts({ ...alerts, info: "" })} />}
-                </div>
-                  <div className="btn-form-add-products-container" >
-                    
-                <ButtonContained text="Enviar" backgroundColor="#2713C2" colorText="#fff" width="250px" height="45px" type="submit" />
-                  </div>
-            </form>
+  <div className="form-products-container">
+    <h2 className="form-products-title">{id ? 'Editar producto' : 'Añadir producto'}</h2>
+    <form className="product-form" onSubmit={handleOnSubmit}>
+      
+      {/* Información general del producto */}
+      <div className="input-group-products">
+        <div className="input-field-products">
+          <label htmlFor="name">Nombre:</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            value={productData.name} 
+            placeholder="Nombre del producto" 
+            required 
+            onChange={handleOnChange} 
+          />
         </div>
-    );
+        <div className="input-field-products">
+          <label htmlFor="description">Descripción:</label>
+          <input 
+            id="description" 
+            name="description" 
+            value={productData.description} 
+            placeholder="Descripción del producto" 
+            required 
+            onChange={handleOnChange}
+          />
+        </div>
+      </div>
+
+      {/* Categoría y precio */}
+      <div className="input-group-products">
+        <div className="input-field-products">
+          <label htmlFor="category">Categoría:</label>
+          <select 
+            className="select-category-form" 
+            onChange={handleOnChange} 
+            required 
+            name="category" 
+            value={productData.category}
+          >
+            <option value='' disabled>Categorías</option>
+            <option value='artesanias'>Artesanías</option>
+            <option value='pinturas'>Pinturas</option>
+            <option value='cocina'>Cocina</option>
+            <option value='accesorios'>Accesorios</option>
+          </select>
+        </div>
+        {productData.offer ? (
+          <>
+            <div className="input-field-products">
+              <label htmlFor="price">Precio original:</label>
+              <input
+                type="text"
+                id="price"
+                name="price"
+                value={productData.price}
+                placeholder="Precio sin oferta"
+                required
+                onChange={handleOnChange}
+              />
+            </div>
+            <div className="input-field-products">
+              <label htmlFor="offerPrice">Precio con oferta:</label>
+              <input
+                type="text"
+                id="offerPrice"
+                name="offerPrice"
+                value={productData.offerPrice}
+                placeholder="Precio con descuento"
+                required
+                onChange={handleOnChange}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="input-field-products">
+            <label htmlFor="price">Precio:</label>
+            <input
+              type="text"
+              id="price"
+              name="price"
+              value={productData.price}
+              placeholder="Precio del producto"
+              required
+              onChange={handleOnChange}
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Stock e imagen */}
+      <div className="input-group-products">
+        <div className="input-field-products">
+          <label htmlFor="stock">Stock:</label>
+          <input 
+            type="number" 
+            id="stock" 
+            name="stock" 
+            value={productData.stock} 
+            placeholder="Stock disponible" 
+            required 
+            onChange={handleOnChange} 
+          />
+        </div>
+        <div className="input-field-products">
+          <label htmlFor="image">Imagen:</label>
+          <input 
+            type="file" 
+            id="file" 
+            name="file" 
+            required 
+            onChange={handleFileUpload} 
+          />
+        </div>
+      </div>
+
+      {/* Oferta y fecha de vencimiento */}
+      <div className="input-group-products">
+        <div className="input-field-products checkbox-container">
+          <input 
+            type="checkbox" 
+            id="offer" 
+            name="offer" 
+            value={productData?.offer} 
+            checked={productData.offer} 
+            onChange={handleChecked} 
+          />
+          <label style={{ marginTop: "5px" }} htmlFor="offer">Oferta</label>
+        </div>
+        {productData.offer && (
+          <div className="input-field-products">
+            <label htmlFor="offerExpire">Fecha de vencimiento:</label>
+            <input 
+              type="date" 
+              id="offerExpire" 
+              name="offerExpire" 
+              value={productData.offerExpire}  
+              onChange={handleOnChange} 
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Alertas */}
+      <div className="alerts-form-add-products">
+        {alerts.error && <ErrorAlert type="error" text={alerts.error} onClose={() => setAlerts({ ...alerts, error: "" })} />}
+        {alerts.info && <InfoAlert type="info" text={alerts.info} onClose={() => setAlerts({ ...alerts, info: "" })} />}
+      </div>
+
+      {/* Botón de envío */}
+      <div className="btn-form-add-products-container">
+        <ButtonContained text="Enviar" backgroundColor="#2713C2" colorText="#fff" width="250px" height="45px" type="submit" />
+      </div>
+      
+    </form>
+  </div>
+);
+
 }

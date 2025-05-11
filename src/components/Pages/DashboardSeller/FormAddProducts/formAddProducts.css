@@ -11,65 +11,65 @@
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  /* height: 100vh; */
-  color: #000000; /* Cambié el color del texto a negro para mejor contraste */
-   display: flex;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  color: #000;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 20px;
 }
 
 .form-products-title {
   text-align: center;
   margin-bottom: 20px;
-  font-size: 34px;
-  font-family: Garamond;
-  color: #000000; /* Cambié el color del título a negro */
+  font-size: 36px;
+  font-family: 'Garamond', sans-serif;
+  color: #000;
 }
 
 .input-group-products {
   display: flex;
-  gap: 15px; /* Espacio entre los inputs */
+  flex-wrap: wrap;
+  gap: 15px;
   margin-bottom: 15px;
 }
 
 .input-field-products {
-  flex: 1; /* Hace que los inputs ocupen el mismo espacio */
+  flex: 1;
+  min-width: 220px;
 }
 
 .product-form label {
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
-  color: #000000; /* Cambié el color del texto de las etiquetas a negro */
+  color: #000;
 }
 
 .product-form input,
-.product-form textarea {
+.product-form textarea,
+.product-form select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd; /* Añadí un borde para mejor visibilidad */
+  padding: 12px;
+  border: 1px solid #ddd;
   border-radius: 5px;
-  /* background-color: #f4f2ee; */
 }
 
 .product-form input:focus,
-.product-form textarea:focus {
+.product-form textarea:focus,
+.product-form select:focus {
   border-color: #2713C2;
   outline: none;
- 
 }
+
 .checkbox-container {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Oculta el checkbox nativo */
 .checkbox-container input[type="checkbox"] {
   appearance: none;
-  -webkit-appearance: none;
   width: 20px;
   height: 20px;
   border: 2px solid #2713C2;
@@ -79,7 +79,6 @@
   transition: background 0.3s ease;
 }
 
-/* Check visual */
 .checkbox-container input[type="checkbox"]:checked {
   background-color: #2713C2;
   border-color: #2713C2;
@@ -96,12 +95,12 @@
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
+
 input[type="date"] {
   padding: 8px 12px;
   border: 2px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
-  transition: border-color 0.3s ease;
   width: 100%;
 }
 
@@ -110,15 +109,13 @@ input[type="date"]:focus {
   outline: none;
 }
 
-.btn-form-add-products-container{
-  margin-top: 30px;
+.btn-form-add-products-container {
   display: flex;
   justify-content: center;
 }
 
 .btn-form-add-products-container Button {
-  width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #2713C2;
   color: #ffffff;
   border: none;
@@ -128,11 +125,11 @@ input[type="date"]:focus {
 }
 
 .btn-form-add-products-container Button:hover {
-  background-color: #1a0d8a; /* Cambié el color al hacer hover */
+  background-color: #1a0d8a;
 }
 
 @media (max-width: 768px) {
-  .input-group {
-    flex-direction: column; /* En móviles, los inputs se apilan */
+  .input-group-products {
+    flex-direction: column;
   }
 }
