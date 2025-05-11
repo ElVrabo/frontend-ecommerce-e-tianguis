@@ -49,6 +49,11 @@
   font-weight: bold;
   color: #333;
 }
+.product-offer{
+   font-size: 15px;
+  color: black;
+  font-weight: bold;
+}
 
 .product-description {
   font-size: 16px;
@@ -56,10 +61,28 @@
   margin: 10px 0;
 }
 
-.product-price, .product-stock {
-  font-size: 18px;
+
+
+.product-price-container{
+ display: flex;
+ flex-direction: column;
+  /* align-items: center; */
+}
+.product-notOffer-price {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 1.1rem;
+}
+
+.product-offer-price  {
   color: black;
   font-weight: bold;
+  font-size: 1.3rem;
+}
+.original-price{
+   color: black;
+  font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .button-add-cart {

@@ -11,11 +11,15 @@ export default function FormAddProducts() {
         description: "",
         category: "",
         price: "",
+        offerPrice:"",
         stock: "",
+        offer:false,
+        offerExpire:"",
         file: null, // Aquí guardaremos la URL final (no un File directamente)
       });
     //   const [isLoadingProduct,setIsLoadingProduct] = useState(true)
     const [loadImage,setLoadImage] = useState(false)
+    const [isChecked,setIsChecked] = useState(false)
     const { addNewProduct, getProduct, getAllProducts, updateProduct, product,alerts,setAlerts } = useContext(productContext);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -39,8 +43,11 @@ export default function FormAddProducts() {
                 description: product.description || "",
                 category: product.category || "",
                 price: product.price || "",
+                offerPrice:product.offerPrice || "",
                 stock: product.stock || "",
                 file: product.file || null,
+                offer:product.offer || "",
+                offerExpire:product.offerExpire || ""
               });
               return
         }
@@ -53,6 +60,7 @@ export default function FormAddProducts() {
         setAlerts({...alerts,info:""})
       }
     },[loadImage])
+
 
     async function handleOnSubmit(event) {
         event.preventDefault();
@@ -87,6 +95,11 @@ export default function FormAddProducts() {
           file: null,
         });
       }
+
+    function handleChecked (e){
+      setIsChecked(e.target.checked)
+      setProductData({...productData,offer:e.target.checked})
+    }
       
 
       function handleOnChange(event) {
@@ -95,6 +108,7 @@ export default function FormAddProducts() {
           ...prev,
           [name]: value,
         }));
+        // console.log(productData)
       }
       
 
@@ -201,10 +215,48 @@ export default function FormAddProducts() {
                         </select>
                         {/* <input type="text" id="category" name="category" placeholder="Categoría del producto" required onChange={handleOnChange} /> */}
                     </div>
-                    <div className="input-field-products">
-                        <label htmlFor="price">Precio:</label>
-                        <input type="text" id="price" name="price" value={productData.price} placeholder="Precio del producto" required onChange={handleOnChange} />
-                    </div>
+                   {productData.offer ? (
+  <>
+    <div className="input-field-products">
+      <label htmlFor="price">Precio original:</label>
+      <input
+        type="text"
+        id="price"
+        name="price"
+        value={productData.price}
+        placeholder="Precio sin oferta"
+        required
+        onChange={handleOnChange}
+      />
+    </div>
+    <div className="input-field-products">
+      <label htmlFor="offerPrice">Precio con oferta:</label>
+      <input
+        type="text"
+        id="offerPrice"
+        name="offerPrice"
+        value={productData.offerPrice}
+        placeholder="Precio con descuento"
+        required
+        onChange={handleOnChange}
+      />
+    </div>
+  </>
+) : (
+  <div className="input-field-products">
+    <label htmlFor="price">Precio:</label>
+    <input
+      type="text"
+      id="price"
+      name="price"
+      value={productData.price}
+      placeholder="Precio del producto"
+      required
+      onChange={handleOnChange}
+    />
+  </div>
+)}
+
                 </div>
 
                 <div className="input-group-products">
@@ -216,6 +268,19 @@ export default function FormAddProducts() {
                         <label htmlFor="image">Imagen:</label>
                         <input type="file" id="file" name="file" required onChange={handleFileUpload} />
                     </div>
+                </div >
+                <div className="input-group-products">
+                    <div className="input-field-products checkbox-container ">
+                       
+                        <input type="checkbox" id="offer" name="offer" value={productData?.offer} checked={productData.offer ? true :false} onChange={handleChecked} />
+                          <label style={{marginTop:"5px"}} htmlFor="offer">Oferta</label>
+                    </div>
+                   {productData.offer ? (
+                     <div className="input-field-products ">
+                        <label htmlFor="image">Fecha de vencimiento:</label>
+                        <input type="date" id="offerExpire" name="offerExpire" value={productData?.offerExpire}  onChange={handleOnChange} />
+                    </div>
+                   ):''}
                 </div >
                 <div className="alerts-form-add-products" >
                     {/* {alerts.success && <SuccessAlert type="success" text={alerts.success} onClose={() => setAlerts({ ...alerts, success: "" })} />} */}

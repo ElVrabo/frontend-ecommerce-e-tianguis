@@ -14,8 +14,15 @@ export default function ProductDetails() {
   const [isLoadingProduct, setIsLoadingProduct] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const { isLoading, isAuth, userData } = useContext(userContext);
-  const { listProducts, saveProductsCart, alerts, setAlerts, getProduct,product,saveFavoriteProduct } =
-    useContext(productContext);
+  const {
+    listProducts,
+    saveProductsCart,
+    alerts,
+    setAlerts,
+    getProduct,
+    product,
+    saveFavoriteProduct,
+  } = useContext(productContext);
   const { id } = useParams();
   const navigate = useNavigate();
   // const productData = listProducts.find((product) => product._id === id)
@@ -31,7 +38,7 @@ export default function ProductDetails() {
     loadProduct();
   }, [id]);
 
-  if ( !product &&isLoadingProduct) {
+  if (!product && isLoadingProduct) {
     return (
       <section className="spinner-product-container">
         <Spinner />
@@ -49,13 +56,31 @@ export default function ProductDetails() {
             <h2 className="product-title">{product.name}</h2>
             <p>Categoria: {product.category}</p>
             <p className="product-description">{product.description}</p>
-            <p className="product-price">{product.price}</p>
             <p
               className="product-stock"
               style={{ color: product.stock <= 1 ? "red" : "black" }}
             >
               Stock: {product.stock}
             </p>
+            <div className="product-price-container">
+              {product.offer ? (
+                <>
+                  <p className="product-notOffer-price">
+                    {product.price}
+                  </p>
+                  <p className="product-offer-price">{product.offerPrice}</p>
+                </>
+              ) : (
+                <p className="original-price">{product.price}</p>
+              )}
+            </div>
+           
+
+            <h2 className="product-offer">
+              {product.offer
+                ? `Oferta valida hasta el ${product.offerExpire}`
+                : ""}
+            </h2>
 
             <div className="button-add-cart">
               <ButtonContained
@@ -72,7 +97,7 @@ export default function ProductDetails() {
                   await saveProductsCart(product);
                 }}
               />
-               <ButtonContained
+              <ButtonContained
                 text="Añadir a favoritos"
                 backgroundColor="#2713C2"
                 colorText="#fff"
@@ -86,16 +111,16 @@ export default function ProductDetails() {
                   await saveFavoriteProduct(product);
                 }}
               />
-                  <ButtonContained
-                  text="Comprar ahora"
-                  className="btn-insert-review"
-                  backgroundColor="#ffffff"
-                  colorText="black"
-                  border="1px solid #2713C2 "
-                  width="250px"
-                  height="45px"
-                  onClick={handleOpenModal}
-                />
+              <ButtonContained
+                text="Comprar ahora"
+                className="btn-insert-review"
+                backgroundColor="#ffffff"
+                colorText="black"
+                border="1px solid #2713C2 "
+                width="250px"
+                height="45px"
+                onClick={handleOpenModal}
+              />
               {!userData ? (
                 ""
               ) : (

@@ -6,26 +6,27 @@ import { useContext, useEffect, useState } from "react"
 import { userContext } from "../../context/userContext/userContext"
 import { productContext } from "../../context/productsContext/productContext"
 import AccountMenu from "../Common/Menus/MenuAccount"
+import useFilterProducts from "../hooks/UseFilterProducts"
 
 export default function Header (){
     const [productName,setProductName] = useState('')
     const [productNumbersCart,setProductsNumberCart] = useState(0)
     // const {isAuth,userData,isLoading,logout} = useContext(userContext)
-    const {getProductByName,listProductsCart,getProductsCart} = useContext(productContext)
+    const {listProductsCart,getProductsCart} = useContext(productContext)
+    const {filterProducts} = useFilterProducts()
     
     const navigate = useNavigate()
 
     useEffect(()=>{
-       async function loadProductsByName(){
         /*si no existe o cambia el estado productName, la peticion no se hara*/ 
         if(!productName){
         return
         }else{
 
-            await getProductByName(productName)
+            filterProducts(productName)
         }
-       }
-       loadProductsByName()
+       
+    //    loadProductsByName()
     },[productName])
 
     useEffect(()=>{
