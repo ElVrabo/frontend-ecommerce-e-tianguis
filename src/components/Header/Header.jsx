@@ -22,7 +22,6 @@ export default function Header (){
         if(!productName){
         return
         }else{
-
             filterProducts(productName)
         }
        
@@ -30,6 +29,9 @@ export default function Header (){
     },[productName])
 
     useEffect(()=>{
+        if(listProductsCart === 0){
+            return
+        }
          getProductsCart()
     },[])
 

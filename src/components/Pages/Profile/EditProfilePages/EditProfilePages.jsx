@@ -47,7 +47,7 @@ export default function EditProfile() {
           <label>Nombre</label>
           <input
             type="text"
-            name="name"
+           
             value={formData.name}
             onChange={handleOnChange}
             placeholder="Ingresa tu nombre"

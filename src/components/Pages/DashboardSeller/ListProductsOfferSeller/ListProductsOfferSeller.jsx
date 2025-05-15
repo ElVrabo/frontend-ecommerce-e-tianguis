@@ -1,6 +1,5 @@
-import "./tableProducts.css"
-import { TextField, Typography, Box } from '@mui/material'; // <-- NUEVO
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react'
+import { productContext } from '../../../../context/productsContext/productContext'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,72 +7,64 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { productContext } from '../../../../context/productsContext/productContext';
-import { useNavigate } from 'react-router-dom';
 import { DeleteIcon, UpdateIcon } from '../../../Common/Icons/Icons';
-import useFilterProducts from '../../../hooks/UseFilterProducts';
-import { ErrorAlert } from "../../../Common/Alerts/Alerts";
+import { useNavigate } from 'react-router-dom';
+import Aside from '../../../Aside/Aside';
+import { Box, TextField } from '@mui/material';
+import { ErrorAlert } from '../../../Common/Alerts/Alerts';
 
-export default function TableProducts() {
-  const [category,setCategory] = useState('')
-  const navigate = useNavigate();
-  const { getAllProducts, deleteProduct, listProducts,setListProducts, isLoading,getProductByCategory,alerts,setAlerts } = useContext(productContext);
-  const {filterProducts} = useFilterProducts()
-
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-  useEffect(()=>{
-    if(!searchTerm){
-      return
-    }else{
-   /*filterProducts es la funcion que retorna la funcion useFilterProducts*/
-      filterProducts(searchTerm)
-    }
- 
-  },[searchTerm])
-
-   useEffect(()=>{
-      async function loadProductsByCategory(){
+export default function ListProductsOfferSeller() {
+    // const [listProductsOffer,setListProductsOffer] = useState([])
+    const [category,setcategory] = useState('')
+     const {getProductsOffer,listProductsOffer,getProductsOfferCategory,deleteProductOffer,isLoading,alerts,setAlerts} = useContext(productContext)
+     const navigate = useNavigate()
+     useEffect(()=>{
+        async function loadProductsOffer(){
+            await getProductsOffer()
+        
+        }
+        loadProductsOffer()
+     },[])
+     useEffect(()=>{
+      async function loadProductOfferByCategory(){
         if(!category){
           return
-        }else{
-          await getProductByCategory(category)
         }
+         await getProductsOfferCategory(category)
       }
-      loadProductsByCategory()
-      
-    },[category])
+      loadProductOfferByCategory()
+     },[category])
 
-   function handleOnChangeCategory(e){
-    const {value} = e.target
-    setCategory(value)
-   } 
-
+     function handleOnChangeCategory(e){
+      const {value} = e.target
+      setcategory(value)
+     }
+if(listProductsOffer.length === 0 && !isLoading){
   return (
-    <Box sx={{ width: '100%', padding: 2 }}>
-
-      <TextField
-        fullWidth
-        label="Buscar productos por nombre"
-        variant="outlined"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-       <div className="alertError-category-dashboard">
-              {alerts.error && (
-                <ErrorAlert
-                  type="error"
-                  text={alerts.error}
-                  onClose={() => setAlerts({ ...alerts, error: "" })}
-                />
-              )}
-            </div>
-      <div className='filter-by-category-container' >
+    <section className='listProducts-seller-container' >
+      <Aside/>
+      <Box sx={{ width: '100%', padding: 2 }} >
+        <h1>¡No tienes productos en oferta!</h1>
+      </Box>
+    </section>
+  )
+}
+   
+  return (
+   
+     <section className="listProducts-seller-container" >
+               <Aside/>
+             <Box sx={{ width: '100%', padding: 2 }} >
+               <div className="alertError-category-dashboard">
+                            {alerts.error && (
+                              <ErrorAlert
+                                type="error"
+                                text={alerts.error}
+                                onClose={() => setAlerts({ ...alerts, error: "" })}
+                              />
+                            )}
+                          </div>
+              <div className='filter-by-category-container' >
        <select 
             className="select-category" 
             onChange={handleOnChangeCategory} 
@@ -88,17 +79,16 @@ export default function TableProducts() {
             <option value='accesorios'>Accesorios</option>
           </select>
         <h3 onClick={()=>{
-          setListProducts([...listProducts].sort((a,b)=>a.name.localeCompare(b.name,'es',{sensitivity:'base'})))
+          setListProductsOffer([...listProductsOffer].sort((a,b)=>a.name.localeCompare(b.name,'es',{sensitivity:'base'})))
         }} >Ordenar alfabeticamente (A-Z)</h3>
         <h3 onClick={()=>{
-          setListProducts([...listProducts].sort((a,b)=>parseFloat(a.price.split(" ")[1]) - parseFloat(b.price.split(" ")[1])))
+          setListProductsOffer([...listProductsOffer].sort((a,b)=>parseFloat(a.price.split(" ")[1]) - parseFloat(b.price.split(" ")[1])))
         }} >Ordenar por precio (menor-mayor)</h3>
         <h3 onClick={()=>{
-          setListProducts([...listProducts].sort((a,b)=>a.stock - b.stock))
+          setListProductsOffer([...listProductsOffer].sort((a,b)=>a.stock - b.stock))
         }}  >Ordenar por dispónibilidad (menor-mayor)</h3>
       </div>
-
-      <TableContainer component={Paper}>
+              <TableContainer component={Paper}>
         <Table sx={{ height: 'auto', width: '100%' }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -112,7 +102,7 @@ export default function TableProducts() {
           </TableHead>
           <TableBody>
             {!isLoading &&
-              listProducts.map((product) => (
+              listProductsOffer.map((product) => (
                 <TableRow key={product._id}>
                   <TableCell>
                     <img
@@ -133,8 +123,9 @@ export default function TableProducts() {
                         height="20px"
                         width="100px"
                         onClick={async () => {
-                          await deleteProduct(product._id);
-                          getAllProducts();
+                          await deleteProductOffer(product._id);
+                          getProductsOffer()
+                        
                         }}
                       />
                     </div>
@@ -158,6 +149,10 @@ export default function TableProducts() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Box>
-  );
+             </Box>
+             {/* </div> */}
+               </section>
+  
+          
+  )
 }

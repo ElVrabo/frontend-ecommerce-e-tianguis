@@ -2,6 +2,8 @@ import axios from "./axios"
 
 
 export const getAllProductsRequest = () => axios.get('/products')
+export const getProductsOfferRequest = ()=>axios.get('/productsOffer')
+export const getProductsOfferCategoryRequest = (categoryOffer)=>axios.get(`/productsOfferCategory?category=${categoryOffer}`)
 export const getProductByIdRequest = (id)=>axios.get(`/products/${id}`)
 export const addNewProductRequest = (data)=> axios.post('/products',data)
 export const getAllProductByNameRequest = (productName) => axios.get(`/searchProduct?productName=${productName}`)

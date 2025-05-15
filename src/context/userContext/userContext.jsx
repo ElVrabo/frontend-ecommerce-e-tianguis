@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import {
+  changePasswordRequest,
   getUserByIdRequest,
   signInRequest,
   signUpRequest,
@@ -79,6 +80,16 @@ export const UserContextProvider = ({ children }) => {
       
     }
   }
+  async function changePassword(data){
+    try {
+      const res = await changePasswordRequest(data)
+      if(res.status === 200){
+        setAlerts({...alerts,success:res.data.message})
+      }
+    } catch (error) {
+       setAlerts({...alerts,error:error.response.data.error})
+    }
+  }
   function logout() {
     Cookies.remove("token");
     setIsAuth(false);
@@ -122,6 +133,7 @@ export const UserContextProvider = ({ children }) => {
         signIn,
         getUserById,
         updateUserById,
+        changePassword,
         logout,
         isAuth,
         userData,

@@ -1,3 +1,7 @@
+.alertError-category{
+    width: 100%;
+    margin-top: 15px;
+}
 .categorys-container{
     display: flex;
     margin-top: 20px;
@@ -9,6 +13,9 @@
 }
 .items-category h2{
     font-family: Garamond;
+}
+.items-category h2:hover{
+    cursor: pointer;
 }
 .select-category{
     /* padding: 10px; */

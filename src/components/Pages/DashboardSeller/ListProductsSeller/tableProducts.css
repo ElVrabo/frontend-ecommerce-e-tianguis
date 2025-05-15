@@ -1,0 +1,11 @@
+.filter-by-category-container{
+    display: flex ;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 40px;
+}
+.filter-by-category-container h3:hover{
+    cursor: pointer;
+}

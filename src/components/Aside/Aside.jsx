@@ -48,15 +48,17 @@ export default function Aside() {
                 }}>Añadir Producto</li>
                 <li onClick={()=>{
                    navigate('/productsSeller')
-                }} >Ver Productos</li>
+                }} >Ver mis productos</li>
               </ul>
             )}
           </li>
           <li onClick={toggleOrdersMenu} className="menu-item">
-            Pedidos
+            Ofertas
             {showOrdersMenu && (
               <ul className="submenu">
-                <li>Ver Mis Pedidos</li>
+                <li onClick={()=>{
+                  navigate('/productsOfferSeller')
+                }} >Ver Mis ofertas</li>
               </ul>
             )}
           </li>

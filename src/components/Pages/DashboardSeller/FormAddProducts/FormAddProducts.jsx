@@ -112,50 +112,50 @@ export default function FormAddProducts() {
       }
       
 
-    async function removeBackground(file) {
-        const formData = new FormData();
-        formData.append("image_file", file);
-        formData.append("size", "auto");
+    // async function removeBackground(file) {
+    //     const formData = new FormData();
+    //     formData.append("image_file", file);
+    //     formData.append("size", "auto");
     
-        try {
-            const res = await fetch("https://api.remove.bg/v1.0/removebg", {
-                method: "POST",
-                headers: {
-                    "X-Api-Key": "mqVS62XPUsEP6EQoDn3waA7Y",
-                },
-                body: formData,
-            });
+    //     try {
+    //         const res = await fetch("https://api.remove.bg/v1.0/removebg", {
+    //             method: "POST",
+    //             headers: {
+    //                 "X-Api-Key": "mqVS62XPUsEP6EQoDn3waA7Y",
+    //             },
+    //             body: formData,
+    //         });
     
-            if (!res.ok) {
-                // console.log("Error al quitar el fondo", res.status);
-                return null;
-            }
+    //         if (!res.ok) {
+    //             // console.log("Error al quitar el fondo", res.status);
+    //             return null;
+    //         }
     
-            const blob = await res.blob();
-            return URL.createObjectURL(blob); // URL de la imagen sin fondo
-        } catch (error) {
-            console.error("Error en remove.bg", error);
-            return null;
-        }
-    }
+    //         const blob = await res.blob();
+    //         return URL.createObjectURL(blob); // URL de la imagen sin fondo
+    //     } catch (error) {
+    //         console.error("Error en remove.bg", error);
+    //         return null;
+    //     }
+    // }
     async function handleFileUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
       
         setLoadImage(true);
       
-        const imageUrlWithoutBg = await removeBackground(file);
-        if (!imageUrlWithoutBg) {
-          setLoadImage(false);
-          return;
-        }
+        // const imageUrlWithoutBg = await removeBackground(file);
+        // if (!imageUrlWithoutBg) {
+        //   setLoadImage(false);
+        //   return;
+        // }
       
-        const response = await fetch(imageUrlWithoutBg);
-        const blob = await response.blob();
-        const fileWithoutBg = new File([blob], "image.png", { type: "image/png" });
+        // const response = await fetch(imageUrlWithoutBg);
+        // const blob = await response.blob();
+        // const fileWithoutBg = new File([blob], "image.png", { type: "image/png" });
       
         const formData = new FormData();
-        formData.append("file", fileWithoutBg);
+        formData.append("file", file);
         formData.append("upload_preset", "project-react-ecommerce");
         formData.append("cloud_name", "dc16nkez3");
       

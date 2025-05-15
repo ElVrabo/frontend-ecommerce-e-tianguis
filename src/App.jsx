@@ -17,6 +17,8 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import EditProfilePages from "./components/Pages/Profile/EditProfilePages/EditProfilePages";
 import MenuProfilePages from "./components/Pages/Profile/MenuProfilePages/MenuProfilePages";
 import FavoriteProductsPages from "./components/Pages/FavoriteProducts/FavoriteProductsPages";
+import ChangePasswordPages from "./components/Pages/Profile/ChangePasswordPages/ChangePasswordPages";
+import ListProductsOfferSeller from "./components/Pages/DashboardSeller/ListProductsOfferSeller/ListProductsOfferSeller";
 
 export default function App() {
   return (
@@ -28,11 +30,14 @@ export default function App() {
         <Route path="/addProducts" element={<FormAddProducts />} />
         <Route path="/addProducts/:id" element={<FormAddProducts />} />
         <Route path="/productsSeller" element={<ListProductsSeller />} />
+        <Route path="/productsOfferSeller" element={<ListProductsOfferSeller />} />
         <Route path="/cart" element={<CartPages />} />
         <Route path="/profile" element={<ProfilePages />} />
         <Route path="/editProfile" element={<EditProfilePages />} />
         <Route path="/menuProfile" element={<MenuProfilePages />} />
         <Route path="/favoriteProducts" element={<FavoriteProductsPages />} />
+        <Route path="/changePassword" element={<ChangePasswordPages />} />
+        
        
         </Route>
         <Route path="/" element={<HomePages />} />

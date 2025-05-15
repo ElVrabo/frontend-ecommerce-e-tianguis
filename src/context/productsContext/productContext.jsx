@@ -1,5 +1,5 @@
 import { createContext,useState } from "react";
-import { addNewProductRequest, deleteFavoriteProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getFavoriteProductsRequest, getProductByIdRequest, getReviewProductRequest, insertReviewProductRequest, saveFavoriteProductRequest, updateProductByIdRequest } from "../../api/products";
+import { addNewProductRequest, deleteFavoriteProductRequest, deleteProductByIdRequest, getAllProductByCategoryRequest, getAllProductByNameRequest, getAllProductsRequest, getFavoriteProductsRequest, getProductByIdRequest, getProductsOfferCategoryRequest, getProductsOfferRequest, getReviewProductRequest, insertReviewProductRequest, saveFavoriteProductRequest, updateProductByIdRequest } from "../../api/products";
 import { deleteProductsCartRequest, getProductsCartRequest, saveProductsCartRequest } from "../../api/cartProducts";
 import { Try } from "@mui/icons-material";
 
@@ -8,6 +8,7 @@ export const productContext = createContext()
 
 export const ProductContextProvider = ({children})=>{
     const [listProducts,setListProducts] = useState(null)
+    const [listProductsOffer,setListProductsOffer] = useState([])
     const [listProductsCart,setListProductsCart] = useState([])
     const [listReviewsProduct,setListReviewsProducts] = useState([])
     const [favoriteProducts,setFavoriteProducts] = useState([])
@@ -29,6 +30,39 @@ async function getAllProducts(){
         // console.log('A ocurrido el siguiente error', error.response.data.error)
     }
 }
+async function getProductsOffer(){
+    try {
+        const res = await getProductsOfferRequest()
+            setListProducts(res.data)
+            setListProductsOffer(res.data)
+            setIsLoading(false)   
+      
+            
+    } catch (error) {
+        setListProducts([])
+        setListProductsOffer([])
+        setIsLoading(false)
+        // console.log('a ocurrido el siguiente error', error)
+    }
+}
+async function getProductsOfferCategory(category){
+    try {
+        const res = await getProductsOfferCategoryRequest(category)
+        if(res.status === 200){
+            setListProductsOffer(res.data)
+        }
+    } catch (error) {
+        
+    }
+}
+async function deleteProductOffer(id){
+    try {
+        setListProductsOffer(listProductsOffer.filter((product)=>product._id !== id))
+        await deleteProductByIdRequest(id)
+    } catch (error) {
+        
+    }
+}
 async function getProductByName(productName){
   try {
     const res = await getAllProductByNameRequest(productName)
@@ -42,6 +76,7 @@ async function getProductByCategory(productCategory){
         const res = await getAllProductByCategoryRequest(productCategory)
         setListProducts(res.data)
     } catch (error) {
+        setAlerts({...alerts,error:error.response.data.error})
     }
 }
 async function getProduct(id){
@@ -164,6 +199,10 @@ async function deleteFavoriteProduct(id){
 return (
     <productContext.Provider value={{
         getAllProducts,
+        getProductsOffer,
+        listProductsOffer,
+        getProductsOfferCategory,
+        deleteProductOffer,
         getProduct,
         getProductByName,
         getProductByCategory,
@@ -174,6 +213,7 @@ return (
         saveProductsCart,
         deleteProductCart,
         listProducts,
+        setListProducts,
         listProductsCart,
         isLoading,
         alerts,

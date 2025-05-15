@@ -109,13 +109,15 @@ export default function AccountMenu() {
           Añadir otra cuenta
         </MenuItem> */}
 
-        {/* <MenuItem onClick={handleClose}>
+        <MenuItem onClick={()=>{
+          navigate('/changePassword')
+        }} >
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Configuraciones
-        </MenuItem> */}
-
+          Cambiar contraseña
+        </MenuItem>
+         
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <Logout fontSize="small" />
